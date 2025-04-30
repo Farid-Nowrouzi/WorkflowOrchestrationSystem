@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.farid.workfloworchestration.controller.MainViewController"
+            prefWidth="1000" prefHeight="700">
+
+    <!-- Top Toolbar -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f4f4f4;">
+            <Button text="Create Node" fx:id="createNodeButton" onAction="#handleCreateNode"/>
+            <Button text="Connect Nodes" fx:id="connectNodesButton" onAction="#handleConnectNodes"/>
+            <Button text="Execute Workflow" fx:id="executeWorkflowButton" onAction="#handleExecuteWorkflow"/>
+            <Button text="Save Workflow" fx:id="saveWorkflowButton" onAction="#handleSaveWorkflow"/>
+            <Button text="Load Workflow" fx:id="loadWorkflowButton" onAction="#handleLoadWorkflow"/>
+            <Button text="Undo" fx:id="undoButton" onAction="#handleUndo"/>
+            <Button text="Redo" fx:id="redoButton" onAction="#handleRedo"/>
+            <Button text="Reset Zoom" fx:id="resetZoomButton" onAction="#handleResetZoom"/>
+            <Button fx:id="clearWorkspaceButton" text="Clear Workspace" onAction="#handleClearWorkspace"/>
+        </HBox>
+    </top>
+
+    <!-- Center Workspace -->
+    <center>
+        <Pane fx:id="workspacePane" style="-fx-background-color: white;" />
+    </center>
+
+    <!-- Right Sidebar: MiniMap + Node Details -->
+    <right>
+        <VBox spacing="20" style="-fx-padding: 10;">
+            <!-- MiniMap -->
+            <Pane fx:id="miniMapPane" prefWidth="150" prefHeight="150"
+                  style="-fx-background-color: #e0e0e0; -fx-border-color: black; -fx-border-width: 1;" />
+
+            <!-- Sidebar -->
+            <VBox fx:id="sidebar" spacing="10">
+                <Label text="Node ID:" />
+                <Label fx:id="sidebarNodeId" />
+
+                <Label text="Node Name:" />
+                <TextField fx:id="sidebarNodeNameField" />
+
+                <Label text="Node Type:" />
+                <Label fx:id="sidebarNodeType" />
+            </VBox>
+        </VBox>
+    </right>
+
+</BorderPane>

@@ -1,0 +1,119 @@
+/*
+ Enhanced Style for Workflow Orchestration System
+ Clean, professional, and visually interactive
+*/
+
+/* ==== Toolbar ==== */
+.toolbar {
+    -fx-background-color: #2E8B57; /* Emerald green */
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.toolbar .button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2E8B57;
+    -fx-font-weight: bold;
+    -fx-border-color: #2E8B57;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6 16 6 16;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0.0, 0, 1);
+}
+
+.toolbar .button:hover {
+    -fx-background-color: #f5fff5;
+}
+
+/* ==== Workspace ==== */
+.workspace {
+    -fx-background-color: #f0f8ff; /* Soft baby blue */
+}
+
+/* ==== Node Styling ==== */
+.node {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2E8B57;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0.3, 2, 2);
+    -fx-min-width: 120;
+    -fx-min-height: 80;
+    -fx-alignment: center;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.node:hover {
+    -fx-background-color: #e6f7ff;
+    -fx-cursor: hand;
+}
+
+/* Highlighted (selected) node */
+.selected {
+    -fx-border-color: #1e90ff;
+    -fx-border-width: 3;
+}
+
+/* ==== Node Labels ==== */
+.node-type {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2E8B57;
+}
+
+.node-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* ==== Node Color Coding by Type ==== */
+.task-node {
+    -fx-border-color: #4caf50; /* Green */
+}
+
+.condition-node {
+    -fx-border-color: #ff9800; /* Orange */
+}
+
+.prediction-node {
+    -fx-border-color: #3f51b5; /* Indigo */
+}
+
+/* ==== MiniMap Pane ==== */
+#miniMapPane {
+    -fx-border-color: #2E8B57;
+    -fx-border-width: 1;
+    -fx-background-color: #e8f5e9;
+}
+
+/* ==== Sidebar Info ==== */
+#sidebar {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#sidebar Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555;
+}
+
+#sidebar TextField {
+    -fx-font-size: 13px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 4;
+    -fx-padding: 4;
+}
+
+/* ==== Arrows (for future CSS styling reference, if supported) ==== */
+.arrow-line {
+    -fx-stroke: #2E8B57;
+    -fx-stroke-width: 2;
+}

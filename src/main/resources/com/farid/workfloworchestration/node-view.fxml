@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.farid.workfloworchestration.controller.MainViewController"
+      spacing="5" alignment="CENTER"
+      style="-fx-border-color: black; -fx-border-width: 1px; -fx-background-color: white; -fx-padding: 10px;"
+      minWidth="120" minHeight="60"
+      maxWidth="180" maxHeight="120"
+      prefWidth="140" prefHeight="80"
+      styleClass="node">
+
+    <!-- Label showing the Node Type -->
+    <Label fx:id="nodeTypeLabel"
+           text="Node Type"
+           style="-fx-font-weight: bold; -fx-text-fill: #444;" />
+
+    <!-- Label showing the Node Name -->
+    <Label fx:id="nodeNameLabel"
+           text="Node Name"
+           wrapText="true"
+           style="-fx-text-fill: #000;" />
+
+</VBox>
