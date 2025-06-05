@@ -3,12 +3,23 @@ package com.farid.workfloworchestration.model;
 import java.util.List;
 
 /**
- * Represents an undoable or redoable action in the workflow editor.
+ * UndoableAction
  *
- * It supports actions on nodes (create, delete, move) and connections (connect, disconnect).
+ * Represents an undoable or redoable user action in the workflow editor.
+ *
+ * <p><strong>OOP Principles Demonstrated:</strong></p>
+ * <ul>
+ *   <li><b>Encapsulation:</b> Fields are private with controlled access through getters/setters.</li>
+ *   <li><b>Constructor Overloading:</b> Different constructors handle node actions and connection actions.</li>
+ *   <li><b>Single Responsibility Principle (SRP):</b> Encapsulates the details of a single user action.</li>
+ *   <li><b>Composition:</b> Composes complex actions using references to {@code WorkflowNode} and {@code WorkflowConnection}.</li>
+ * </ul>
  */
 public class UndoableAction {
 
+    /**
+     * Enum to classify the type of undoable action.
+     */
     public enum ActionType {
         CREATE_NODE,
         DELETE_NODE,
@@ -16,6 +27,8 @@ public class UndoableAction {
         CONNECT_NODES,
         DISCONNECT_NODES
     }
+
+    // === Encapsulated (private) fields ===
 
     private final ActionType actionType;
 
@@ -30,12 +43,15 @@ public class UndoableAction {
     private final WorkflowNode sourceNode;
     private final WorkflowNode targetNode;
 
-    // For DELETE_NODE actions (undo restore)
+    // For DELETE_NODE actions: store deleted connections
     private List<WorkflowConnection> savedConnections;
+    private String connectionLabel;
 
-    // === Constructors ===
+    // === Constructor Overloading ===
 
-    // For MOVE_NODE actions (move with position tracking)
+    /**
+     * Constructor for MOVE_NODE actions with coordinate tracking.
+     */
     public UndoableAction(ActionType actionType, WorkflowNode node, double oldX, double oldY, double newX, double newY) {
         this.actionType = actionType;
         this.node = node;
@@ -47,14 +63,9 @@ public class UndoableAction {
         this.targetNode = null;
     }
 
-    public boolean involvesNode(WorkflowNode n) {
-        return (node != null && node.equals(n)) ||
-                (sourceNode != null && sourceNode.equals(n)) ||
-                (targetNode != null && targetNode.equals(n));
-    }
-
-
-    // For CONNECT_NODES / DISCONNECT_NODES actions
+    /**
+     * Constructor for CONNECT_NODES or DISCONNECT_NODES actions.
+     */
     public UndoableAction(ActionType actionType, WorkflowNode sourceNode, WorkflowNode targetNode) {
         this.actionType = actionType;
         this.node = null;
@@ -66,7 +77,9 @@ public class UndoableAction {
         this.targetNode = targetNode;
     }
 
-    // 🌟 NEW: For DELETE_NODE with saved connections
+    /**
+     * Constructor for DELETE_NODE actions that also store removed connections.
+     */
     public UndoableAction(ActionType actionType, WorkflowNode node, List<WorkflowConnection> savedConnections) {
         this.actionType = actionType;
         this.node = node;
@@ -79,7 +92,16 @@ public class UndoableAction {
         this.savedConnections = savedConnections;
     }
 
-    // === Getters ===
+    /**
+     * Checks if this action involves a given node.
+     */
+    public boolean involvesNode(WorkflowNode n) {
+        return (node != null && node.equals(n)) ||
+                (sourceNode != null && sourceNode.equals(n)) ||
+                (targetNode != null && targetNode.equals(n));
+    }
+
+    // === Getters (Encapsulation) ===
 
     public ActionType getActionType() {
         return actionType;
@@ -113,12 +135,21 @@ public class UndoableAction {
         return targetNode;
     }
 
-    // 🌟 Get/Set for DELETE_NODE saved connections
     public List<WorkflowConnection> getSavedConnections() {
         return savedConnections;
     }
 
+    public String getConnectionLabel() {
+        return connectionLabel;
+    }
+
+    // === Setters (Controlled Write Access for Mutables) ===
+
     public void setSavedConnections(List<WorkflowConnection> savedConnections) {
         this.savedConnections = savedConnections;
+    }
+
+    public void setConnectionLabel(String label) {
+        this.connectionLabel = label;
     }
 }

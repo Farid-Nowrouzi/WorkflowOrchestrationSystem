@@ -1,5 +1,6 @@
 package com.farid.workfloworchestration.service;
 
+import com.farid.workfloworchestration.exception.InvalidWorkflowException;
 import com.farid.workfloworchestration.model.WorkflowConnection;
 import com.farid.workfloworchestration.model.WorkflowNode;
 
@@ -8,25 +9,33 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * WorkflowExecutionService
+ * Handles the execution of a workflow graph by traversing connected nodes.
  *
- * Responsibilities:
- * - Execute a workflow starting from a node.
- * - Traverse through nodes via connections.
+ * <p>This class focuses solely on executing the logical flow between nodes
+ * without managing validation, UI updates, or data collection.</p>
  *
- * OOP Concepts Applied:
- * - Encapsulation: Keeps execution logic inside.
- * - Abstraction: Simple executeWorkflow method hides details.
- * - Cohesion: Only execution, no validation, no UI.
- * - Information Hiding: Internal traversal hidden.
- * - Defensive Programming: Avoids cycles and nulls.
+ * <p><strong>Key Responsibilities:</strong></p>
+ * <ul>
+ *   <li>Traverse the directed graph starting from a specified node.</li>
+ *   <li>Execute each node while preventing infinite loops (cycle detection).</li>
+ *   <li>Log execution steps for debugging or demonstration purposes.</li>
+ * </ul>
+ *
+ * <p><strong>OOP Principles Applied:</strong></p>
+ * <ul>
+ *   <li><b>Encapsulation:</b> Execution logic is private and self-contained.</li>
+ *   <li><b>Abstraction:</b> Client code only calls <code>executeWorkflow()</code>.</li>
+ *   <li><b>Cohesion:</b> Class is focused on one responsibility—execution.</li>
+ *   <li><b>Information Hiding:</b> Internal state and logging format are hidden.</li>
+ *   <li><b>Defensive Programming:</b> Protects against nulls and infinite cycles.</li>
+ * </ul>
  */
 public class WorkflowExecutionService {
 
     /**
-     * Public entry point: Executes a workflow from the given node.
+     * Executes the workflow starting from the specified node.
      *
-     * @param startNode The starting node to execute.
+     * @param startNode the node to begin execution from
      */
     public void executeWorkflow(WorkflowNode startNode) {
         if (startNode == null) {
@@ -39,11 +48,11 @@ public class WorkflowExecutionService {
     }
 
     /**
-     * Recursive helper with cycle detection and indentation for clarity.
+     * Internal recursive method for depth-first execution.
      *
-     * @param node     The current node to execute.
-     * @param visited  Set of visited node IDs to prevent cycles.
-     * @param depth    Current execution depth (for indentation).
+     * @param node    the current node being processed
+     * @param visited set of node IDs to detect and avoid cycles
+     * @param depth   the current recursion level (used for indentation)
      */
     private void executeWorkflowRecursive(WorkflowNode node, Set<String> visited, int depth) {
         if (node == null || visited.contains(node.getId())) {
@@ -55,7 +64,13 @@ public class WorkflowExecutionService {
 
         visited.add(node.getId());
         log(depth, "✅ Executing node: " + node.getName() + " [" + node.getNodeType() + "]");
-        node.execute();
+
+        try {
+            node.execute();
+        } catch (InvalidWorkflowException e) {
+            log(depth, "❌ Execution failed for node '" + node.getName() + "': " + e.getMessage());
+            return;
+        }
 
         List<WorkflowConnection> outgoingConnections = node.getOutgoingConnections();
         if (outgoingConnections != null && !outgoingConnections.isEmpty()) {
@@ -70,16 +85,16 @@ public class WorkflowExecutionService {
     }
 
     /**
-     * Utility method for clean indented logs.
+     * Logs a message with indentation based on recursion depth.
      *
-     * @param depth The current depth (used for indentation).
-     * @param message The message to log.
+     * @param depth   number of levels deep in the workflow
+     * @param message the message to print
      */
     private void log(int depth, String message) {
         String indent = "  ".repeat(depth);
         System.out.println(indent + message);
     }
 
-    // 🔮 Optional: Future support for collecting results, logs, predictions, etc.
+    // Future Extension: Execute with a result collector, logging system, or callback
     // public void executeWorkflowWithCollector(WorkflowNode startNode, ResultCollector collector) { ... }
 }

@@ -1,75 +1,71 @@
-/*
- Enhanced Style for Workflow Orchestration System
- Clean, professional, and visually interactive
-*/
+/* === Workflow Orchestration System UI Styles === */
 
-/* ==== Toolbar ==== */
+.root {
+    -fx-background-color: #f4f7fb; /* soft bluish-gray */
+}
+
+/* ===== Toolbar ===== */
 .toolbar {
-    -fx-background-color: #2E8B57; /* Emerald green */
+    -fx-background-color: #2E8B57;
     -fx-padding: 10;
     -fx-spacing: 10;
     -fx-alignment: center-left;
 }
 
 .toolbar .button {
-    -fx-background-color: #ffffff;
-    -fx-text-fill: #2E8B57;
+    -fx-background-color: #f1fff1;
+    -fx-text-fill: #1a1a1a;
     -fx-font-weight: bold;
     -fx-border-color: #2E8B57;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 6 16 6 16;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0.0, 0, 1);
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6 10 6 10;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 1, 0.0, 0, 1);
+    -fx-font-size: 11px;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+
+    /* === ADD THESE === */
+    -fx-min-width: 90;
+    -fx-pref-width: 90;
+    -fx-min-height: 45;
+    -fx-pref-height: 45;
 }
+
 
 .toolbar .button:hover {
     -fx-background-color: #f5fff5;
 }
 
-/* ==== Workspace ==== */
+/* ===== Workspace ===== */
 .workspace {
-    -fx-background-color: #f0f8ff; /* Soft baby blue */
+    -fx-background-color: #f0f8ff;
+    -fx-padding: 0;
 }
 
-/* ==== Node Styling ==== */
+/* ===== Node Base Style ===== */
 .node {
     -fx-background-color: #ffffff;
-    -fx-border-color: #2E8B57;
     -fx-border-width: 2;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
-    -fx-padding: 12;
+    -fx-padding: 8;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0.3, 2, 2);
-    -fx-min-width: 120;
-    -fx-min-height: 80;
+    -fx-min-width: 100;
+    -fx-min-height: 50;
     -fx-alignment: center;
-    -fx-transition: all 0.2s ease-in-out;
 }
 
 .node:hover {
-    -fx-background-color: #e6f7ff;
-    -fx-cursor: hand;
+    -fx-background-color: #e0f3ff;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.4, 0, 3);
 }
 
-/* Highlighted (selected) node */
-.selected {
-    -fx-border-color: #1e90ff;
-    -fx-border-width: 3;
-}
 
-/* ==== Node Labels ==== */
-.node-type {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2E8B57;
-}
-
-.node-name {
-    -fx-font-size: 14px;
-    -fx-text-fill: #333333;
-}
-
-/* ==== Node Color Coding by Type ==== */
+/* ===== Node Border Color By Type ===== */
 .task-node {
     -fx-border-color: #4caf50; /* Green */
 }
@@ -82,16 +78,45 @@
     -fx-border-color: #3f51b5; /* Indigo */
 }
 
-/* ==== MiniMap Pane ==== */
-#miniMapPane {
-    -fx-border-color: #2E8B57;
-    -fx-border-width: 1;
-    -fx-background-color: #e8f5e9;
+.analysis-node {
+    -fx-border-color: #9c27b0; /* Purple */
 }
 
-/* ==== Sidebar Info ==== */
+/* ===== Label Colors By Type ===== */
+.task-label {
+    -fx-text-fill: #4caf50;
+    -fx-font-weight: bold;
+}
+
+.condition-label {
+    -fx-text-fill: #ff9800;
+    -fx-font-weight: bold;
+}
+
+.prediction-label {
+    -fx-text-fill: #3f51b5;
+    -fx-font-weight: bold;
+}
+
+.analysis-label {
+    -fx-text-fill: #9c27b0;
+    -fx-font-weight: bold;
+}
+
+/* ===== Label Styling ===== */
+.node-type {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.node-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* ===== Sidebar Info ===== */
 #sidebar {
-    -fx-background-color: #f9f9f9;
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #eef3f9);
     -fx-padding: 10;
     -fx-border-color: #cccccc;
     -fx-border-width: 1;
@@ -112,8 +137,526 @@
     -fx-padding: 4;
 }
 
-/* ==== Arrows (for future CSS styling reference, if supported) ==== */
+/* ===== MiniMap ===== */
+#miniMapPane {
+    -fx-border-color: #2E8B57;
+    -fx-border-width: 1;
+    -fx-background-color: #e8f5e9;
+}
+
+/* ===== Arrows Between Nodes ===== */
 .arrow-line {
     -fx-stroke: #2E8B57;
     -fx-stroke-width: 2;
 }
+
+.start-end-node {
+    -fx-border-color: #009688; /* Teal-ish unique color */
+    -fx-border-width: 3;
+}
+
+.start-end-label {
+    -fx-text-fill: #009688;
+    -fx-font-weight: bold;
+}
+
+/* ===== DATA Node ===== */
+.data-node {
+    -fx-border-color: #00bcd4; /* Cyan */
+}
+
+.data-label {
+    -fx-text-fill: #00bcd4;
+    -fx-font-weight: bold;
+}
+
+/* ===== OUTPUT Node ===== */
+.output-node {
+    -fx-border-color: #ff4081; /* Pink */
+}
+
+.output-label {
+    -fx-text-fill: #ff4081;
+    -fx-font-weight: bold;
+}
+
+.condition-input {
+    -fx-font-size: 11px;
+    -fx-background-color: #fffde7;
+    -fx-border-color: #ffcc00;
+}
+
+
+/* === Smaller size for default nodes === */
+.node {
+    -fx-padding: 5;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+/* === Smaller layout for all standard nodes === */
+.task-node, .start-end-node, .data-node, .output-node, .prediction-node, .analysis-node {
+    -fx-pref-width: 110;
+    -fx-pref-height: 60;
+}
+
+/* === Larger layout for CONDITION node === */
+.condition-node {
+    -fx-pref-width: 160;
+    -fx-pref-height: 130;
+}
+
+/* ===== ML-Specific Node Colors ===== */
+
+.training-node {
+    -fx-border-color: #ff5722;
+}
+.training-label {
+    -fx-text-fill: #ff5722;
+    -fx-font-weight: bold;
+}
+
+
+.testing-node {
+    -fx-border-color: #607d8b;
+}
+.testing-label {
+    -fx-text-fill: #607d8b;
+    -fx-font-weight: bold;
+}
+
+.preprocessing-node {
+    -fx-border-color: #2196f3;
+}
+.preprocessing-label {
+    -fx-text-fill: #2196f3;
+    -fx-font-weight: bold;
+}
+
+.feature-engineering-node {
+    -fx-border-color: #ffb300;
+}
+.feature-engineering-label {
+    -fx-text-fill: #ffb300;
+    -fx-font-weight: bold;
+}
+
+.inference-node {
+    -fx-border-color: #5e35b1; /* Deep Purple */
+}
+.inference-label {
+    -fx-text-fill: #5e35b1;
+    -fx-font-weight: bold;
+}
+
+.clustering-node {
+    -fx-border-color: #0097a7;
+}
+.clustering-label {
+    -fx-text-fill: #0097a7;
+    -fx-font-weight: bold;
+}
+
+.ensemble-node {
+    -fx-border-color: #8bc34a;
+}
+.ensemble-label {
+    -fx-text-fill: #8bc34a;
+    -fx-font-weight: bold;
+}
+
+.gnn-module-node {
+    -fx-border-color: #673ab7;
+}
+.gnn-module-label {
+    -fx-text-fill: #673ab7;
+    -fx-font-weight: bold;
+}
+
+.hyperparameter-node {
+    -fx-border-color: #e91e63;
+}
+.hyperparameter-label {
+    -fx-text-fill: #e91e63;
+    -fx-font-weight: bold;
+}
+
+.explainability-node {
+    -fx-border-color: #9e9d24;
+}
+.explainability-label {
+    -fx-text-fill: #9e9d24;
+    -fx-font-weight: bold;
+}
+
+.monitoring-node {
+    -fx-border-color: #3e4a59;
+}
+.monitoring-label {
+    -fx-text-fill: #3e4a59;
+    -fx-font-weight: bold;
+}
+/* === EVALUATION Node (Dark Brown) === */
+.evaluation-node {
+    -fx-border-color: #4E342E; /* Dark Brown */
+}
+
+.evaluation-label {
+    -fx-text-fill: #4E342E;
+    -fx-font-weight: bold;
+}
+/* === MODEL SELECTION Node === */
+.model-selection-node {
+    -fx-border-color: #1a237e; /* Navy Blue */
+}
+
+.model-selection-label {
+    -fx-text-fill: #1a237e;
+    -fx-font-weight: bold;
+}
+.validation-node {
+    -fx-border-color: #7cb342; /* Lime Green */
+}
+.validation-label {
+    -fx-text-fill: #7cb342;
+    -fx-font-weight: bold;
+}
+
+.toolbar .button:pressed {
+    -fx-background-color: #c8e6c9;
+}
+
+.zoom-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bbbbbb;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 3, 0, 1, 1);
+    -fx-cursor: hand;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-padding: 2;
+}
+.zoom-button:hover {
+    -fx-background-color: #e3f2fd;
+}
+
+#workspacePane {
+    -fx-background-color: #f0f8ff;
+    -fx-border-color: #c0d6e4;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+}
+
+#workspaceTitleField {
+    -fx-background-color: #e8f5e9;  /* light greenish */
+    -fx-border-color: #2E8B57;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-text-fill: #1a1a1a; /* readable text */
+}
+
+.toolbar .button:hover {
+    -fx-background-color: #e0f8e0; /* stronger hover */
+}
+
+#zoomInButton, #zoomOutButton {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #dfffe8;
+    -fx-border-color: #4caf50;
+    -fx-text-fill: #2e7d32;
+}
+
+.toolbar .button {
+    -fx-min-width: 80;
+    -fx-min-height: 48;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-content-display: top;
+    -fx-font-size: 11px;
+}
+
+#sidebar {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e8f5e9); /* soft white to greenish */
+    -fx-border-color: #B0BEC5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0.3, 0, 2);
+}
+
+/* === Sidebar Labels === */
+#sidebar Label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32; /* elegant green */
+}
+
+/* === Sidebar TextFields === */
+#sidebar TextField {
+    -fx-font-size: 13px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 5;
+}
+
+/* === Sidebar ComboBox === */
+#sidebar ComboBox {
+    -fx-font-size: 13px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* === Sidebar TextArea === */
+#sidebar TextArea {
+    -fx-font-size: 12px;
+    -fx-background-color: #f9fbe7; /* very light yellow-green */
+    -fx-border-color: #cfd8dc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 5;
+}
+
+/* === Execution Log Area === */
+#executionLogArea {
+    -fx-background-color: #f1f8e9;
+    -fx-border-color: #bdbdbd;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-family: Consolas, monospace;
+    -fx-font-size: 11px;
+    -fx-padding: 6;
+}
+
+#sidebar Label {
+    -fx-padding: 4 0 2 0;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* === Create Node Dialog === */
+.node-dialog {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e8f5e9);
+    -fx-border-color: #81c784;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 16;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.node-dialog-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #2e7d32;
+    -fx-font-weight: bold;
+}
+
+.node-dialog-input {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #aed581;
+    -fx-border-radius: 4;
+    -fx-padding: 4;
+}
+
+.node-dialog-textarea {
+    -fx-background-color: #f1f8e9;
+    -fx-border-color: #c5e1a5;
+    -fx-border-radius: 4;
+    -fx-padding: 6;
+    -fx-font-family: Consolas, monospace;
+}
+
+/* === Hover Effects for Create Node Dialog === */
+.node-dialog-input:hover {
+    -fx-background-color: #f0fff0; /* Light greenish */
+    -fx-border-color: #66bb6a;
+}
+
+.node-dialog-textarea:hover {
+    -fx-background-color: #f9fff9; /* Even lighter green */
+    -fx-border-color: #81c784;
+}
+
+.node-dialog-input:focused {
+    -fx-border-color: #388e3c;
+    -fx-background-color: #ffffff;
+}
+
+.node-dialog-textarea:focused {
+    -fx-border-color: #4caf50;
+    -fx-background-color: #ffffff;
+}
+
+
+.node-dialog-input {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #81c784;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6 10;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 1, 0, 0, 1);
+}
+
+.node-dialog-input:hover {
+    -fx-background-color: #f0fff0;
+    -fx-border-color: #66bb6a;
+}
+
+.node-dialog-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2e7d32;
+    -fx-wrap-text: true;
+}
+
+.node-dialog-input {
+    -fx-font-size: 13px;
+    -fx-padding: 6;
+}
+
+.workspace-title-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+    -fx-font-size: 13px;
+}
+
+.workspace-title-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2E8B57;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2E7D32;
+    -fx-pref-width: 180;
+    -fx-padding: 3 6 3 6;
+}
+
+.rename-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2E7D32;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.rename-button:hover {
+    -fx-text-fill: #388E3C;
+}
+
+.workflow-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #66bb6a;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-padding: 4;
+}
+
+.edit-button, .save-button {
+    -fx-font-size: 12px;
+    -fx-background-color: #f5fff5;
+    -fx-border-color: #81c784;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+#editTitleButton {
+    -fx-background-color: #ffecb3;
+    -fx-border-color: gray;
+}
+
+#saveTitleButton {
+    -fx-background-color: #c8e6c9;
+    -fx-border-color: gray;
+}
+
+#workspaceTitleField {
+    -fx-background-color: #e8f5e9; /* Soft green */
+    -fx-border-color: #c8e6c9;
+    -fx-border-width: 1px;
+    -fx-padding: 4px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#editTitleButton {
+    -fx-background-color: #fff3cd; /* light yellow */
+    -fx-border-color: #ffecb3;
+    -fx-padding: 4px 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+#titleBarBox {
+    -fx-background-color: #f1f8e9;
+    -fx-padding: 8px;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+    -fx-border-color: #c5e1a5;
+    -fx-border-width: 0 0 2px 0;
+}
+
+/* === Title field styling === */
+.workflow-title {
+    -fx-background-color: #e3f2fd;     /* light blue */
+    -fx-border-color: #90caf9;         /* matching blue border */
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 6;
+    -fx-font-weight: bold;
+}
+
+/* === Edit button styling === */
+.edit-button {
+    -fx-background-color: #ffe082;     /* soft amber yellow */
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-color: #ffca28;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4 8;
+}
+
+/* Optional: Save button style (already styled inline, but cleaner here) */
+.save-button {
+    -fx-background-color: #c8e6c9;     /* pale green */
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-color: #81c784;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-padding: 4 8;
+}
+
+.workflow-title {
+    -fx-background-color: #e3f2fd;     /* soft blue */
+    -fx-border-color: #64b5f6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6;
+    -fx-font-weight: bold;
+}
+
+.edit-button {
+    -fx-background-color: #fff3cd;     /* light yellow */
+    -fx-border-color: #ffecb5;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 4 8;
+}
+

@@ -1,28 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.farid.workfloworchestration.controller.MainViewController"
-      spacing="5" alignment="CENTER"
-      style="-fx-border-color: black; -fx-border-width: 1px; -fx-background-color: white; -fx-padding: 10px;"
-      minWidth="120" minHeight="60"
-      maxWidth="180" maxHeight="120"
-      prefWidth="140" prefHeight="80"
+      fx:id="nodeView"
+      alignment="CENTER"
+      spacing="6"
+      minWidth="100" minHeight="60"
+      prefWidth="110" prefHeight="70"
       styleClass="node">
 
-    <!-- Label showing the Node Type -->
+    <!-- Node Type -->
     <Label fx:id="nodeTypeLabel"
            text="Node Type"
-           style="-fx-font-weight: bold; -fx-text-fill: #444;" />
+           wrapText="true"
+           styleClass="node-type"/>
 
-    <!-- Label showing the Node Name -->
+    <!-- Node Name -->
     <Label fx:id="nodeNameLabel"
            text="Node Name"
            wrapText="true"
-           style="-fx-text-fill: #000;" />
+           styleClass="node-name"/>
+
+    <!-- Logic Expression Field (Only for CONDITION nodes) -->
+    <TextField fx:id="conditionExpressionField"
+               promptText="Condition logic (e.g. x > 5)"
+               styleClass="condition-input"
+               visible="false"
+               managed="false"
+               maxWidth="120"/>
+
+    <!-- Yes / No Labels (Only for CONDITION nodes) -->
+    <VBox fx:id="conditionBranchBox" spacing="3"
+          visible="false" managed="false">
+
+        <HBox spacing="4" alignment="CENTER">
+            <Label text="Yes ➤"/>
+            <Label fx:id="yesTargetLabel"
+                   text="(Unconnected)"
+                   style="-fx-font-style: italic;"/>
+        </HBox>
+
+        <HBox spacing="4" alignment="CENTER">
+            <Label text="No ➤"/>
+            <Label fx:id="noTargetLabel"
+                   text="(Unconnected)"
+                   style="-fx-font-style: italic;"/>
+        </HBox>
+    </VBox>
 
 </VBox>

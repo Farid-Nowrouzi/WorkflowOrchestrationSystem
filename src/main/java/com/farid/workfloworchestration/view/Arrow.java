@@ -2,40 +2,58 @@ package com.farid.workfloworchestration.view;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
 
+/**
+ * Arrow
+ *
+ * <p>A visual arrow component representing a directional connection between two nodes
+ * in the workflow UI. Includes an animated dashed line, arrowhead, and optional label.</p>
+ *
+ * <p><strong>OOP Concepts Demonstrated:</strong></p>
+ * <ul>
+ *   <li><b>Encapsulation:</b> All animation, rotation, and label logic is kept internal.</li>
+ *   <li><b>Abstraction:</b> Exposed public API: setStart, setEnd, setLabel, highlight, etc.</li>
+ *   <li><b>Reusability & Modularity:</b> Can be reused for any JavaFX graph connection UI.</li>
+ * </ul>
+ */
 public class Arrow extends Group {
+
     private final Line line;
     private final Polygon arrowHead;
     private final Label label;
     private Timeline flowAnimation;
     private boolean isHighlighted = false;
 
+    /**
+     * Constructs a new animated arrow from (startX, startY) to (endX, endY).
+     */
     public Arrow(double startX, double startY, double endX, double endY) {
-        line = new Line(startX, startY, endX, endY);
-        line.setStrokeWidth(2);
-        line.getStrokeDashArray().addAll(10.0, 10.0);
+        this.line = new Line(startX, startY, endX, endY);
+        this.line.setStrokeWidth(2);
+        this.line.getStrokeDashArray().addAll(10.0, 10.0);
 
-        arrowHead = createArrowHead();
-
-        label = new Label("");
-        label.setStyle("-fx-background-color: white; -fx-padding: 2; -fx-border-color: black;");
+        this.arrowHead = createArrowHead();
+        this.label = createBoundLabel();
 
         getChildren().addAll(line, arrowHead, label);
 
         updateArrowRotation();
-        updateLabelPosition();
         startFlowAnimation();
     }
 
+    /**
+     * Creates the triangle arrowhead polygon.
+     */
     private Polygon createArrowHead() {
-        Polygon head = new Polygon();
-        head.getPoints().addAll(
+        Polygon head = new Polygon(
                 0.0, 0.0,
                 -10.0, -5.0,
                 -10.0, 5.0
@@ -44,23 +62,50 @@ public class Arrow extends Group {
         return head;
     }
 
+    /**
+     * Creates and binds the arrow label to be centered on the line.
+     */
+    private Label createBoundLabel() {
+        Label lbl = new Label();
+        lbl.setStyle(
+                "-fx-background-color: rgba(255,255,255,0.95); " +
+                        "-fx-border-color: #999999; " +
+                        "-fx-border-radius: 12; " +
+                        "-fx-background-radius: 12; " +
+                        "-fx-padding: 4 8; " +
+                        "-fx-font-size: 11px; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-effect: dropshadow(gaussian, lightgray, 2, 0.5, 0, 1);"
+        );
+        lbl.setMouseTransparent(true);
+
+        lbl.layoutXProperty().bind(Bindings.createDoubleBinding(() ->
+                        (line.getStartX() + line.getEndX()) / 2 - lbl.getWidth() / 2,
+                line.startXProperty(), line.endXProperty(), lbl.widthProperty()));
+
+        lbl.layoutYProperty().bind(Bindings.createDoubleBinding(() ->
+                        (line.getStartY() + line.getEndY()) / 2 - lbl.getHeight() - 6,
+                line.startYProperty(), line.endYProperty(), lbl.heightProperty()));
+
+        return lbl;
+    }
+
+    /**
+     * Rotates the arrowhead to follow the line's direction.
+     */
     private void updateArrowRotation() {
         double dx = line.getEndX() - line.getStartX();
         double dy = line.getEndY() - line.getStartY();
-        double angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        double angle = Math.toDegrees(Math.atan2(dy, dx));
 
         arrowHead.setRotate(angle);
         arrowHead.setLayoutX(line.getEndX());
         arrowHead.setLayoutY(line.getEndY());
     }
 
-    private void updateLabelPosition() {
-        double midX = (line.getStartX() + line.getEndX()) / 2;
-        double midY = (line.getStartY() + line.getEndY()) / 2;
-        label.setLayoutX(midX);
-        label.setLayoutY(midY - 20);
-    }
-
+    /**
+     * Starts the animation of the arrow’s dashed line.
+     */
     private void startFlowAnimation() {
         flowAnimation = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> {
@@ -73,24 +118,32 @@ public class Arrow extends Group {
         flowAnimation.play();
     }
 
-    // ========== Public Methods ==========
+    // ===================== PUBLIC METHODS ======================
 
     public void setStart(double x, double y) {
         line.setStartX(x);
         line.setStartY(y);
         updateArrowRotation();
-        updateLabelPosition();
     }
 
     public void setEnd(double x, double y) {
         line.setEndX(x);
         line.setEndY(y);
         updateArrowRotation();
-        updateLabelPosition();
     }
 
     public void setLabel(String text) {
-        label.setText(text);
+        String clean = text != null ? text.trim() : "";
+        label.setText(clean);
+
+        Tooltip tooltip = new Tooltip(
+                "From: (" + (int) line.getStartX() + "," + (int) line.getStartY() + ")\n" +
+                        "To: (" + (int) line.getEndX() + "," + (int) line.getEndY() + ")\n" +
+                        "Label: " + clean
+        );
+        tooltip.setWrapText(true);
+        tooltip.setMaxWidth(300);
+        Tooltip.install(label, tooltip);
     }
 
     public String getLabel() {
@@ -125,14 +178,10 @@ public class Arrow extends Group {
     }
 
     public void stopAnimation() {
-        if (flowAnimation != null) {
-            flowAnimation.stop();
-        }
+        if (flowAnimation != null) flowAnimation.stop();
     }
 
     public void restartAnimation() {
-        if (flowAnimation != null) {
-            flowAnimation.play();
-        }
+        if (flowAnimation != null) flowAnimation.play();
     }
 }
