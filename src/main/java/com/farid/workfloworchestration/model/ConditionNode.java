@@ -34,12 +34,20 @@ import java.util.Map;
  */
 public class ConditionNode extends ExecutableNode<String> { // Inheritance, Parametric Polymorphism
 
-    // Encapsulation: Internal state is hidden and accessed via getters/setters
-    private String conditionExpression; // Logical rule (e.g., "x > 10")
+    // === Private Fields (Information Hiding Compliance) ===
+// Mutable instance field holding the condition logic (e.g., "x > 10")
+    private String conditionExpression;
 
-    // Composition: The node references other nodes
+    // References to other nodes for yes/no branching (composition)
     private WorkflowNode yesTarget;
     private WorkflowNode noTarget;
+
+    // === Information Hiding Compliance ===
+// This class defines 3 mutable private instance fields:
+// - conditionExpression: the logical rule to evaluate
+// - yesTarget / noTarget: references for conditional branching
+// All are accessed via encapsulated getters/setters.
+
 
     /**
      * Constructs a blank condition node.

@@ -23,6 +23,9 @@ package com.farid.workfloworchestration.exception;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+// === Information Hiding Compliance ===
+// No fields exposed; uses constructor-based encapsulation via inheritance.
+
 public class UnsupportedOperationForNodeException extends Exception { // Inheritance, Subtyping
 
   /**

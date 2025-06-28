@@ -23,7 +23,10 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  */
 public class AnalysisNode extends WorkflowNode { // Inheritance
 
-    // Encapsulation: Field is private and only modifiable through constructor
+    // === Private Field (Information Hiding Compliance) ===
+// Mutable internal field representing the analysis type (e.g., "Statistical").
+// It is set only via constructor and not exposed through any setter.
+
     private String analysisType;
 
     /**

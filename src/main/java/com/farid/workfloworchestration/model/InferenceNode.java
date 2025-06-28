@@ -25,6 +25,11 @@ import java.util.Map;
  */
 public class InferenceNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new fields.
+// All encapsulated attributes are inherited from ExecutableNode<String>.
+
+
     /**
      * Basic constructor without description.
      * @param id   Unique node ID
@@ -49,8 +54,8 @@ public class InferenceNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🔮 Inference executed for: " + getName());
-        System.out.println("📊 Generating predictions from trained model...");
+        System.out.println(" Inference executed for: " + getName());
+        System.out.println(" Generating predictions from trained model...");
     }
 
     /**
@@ -69,7 +74,7 @@ public class InferenceNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🔍 Inference with context: " + context);
+        System.out.println(" Inference with context: " + context);
 
         try {
             // Extract metadata
@@ -86,15 +91,15 @@ public class InferenceNode extends ExecutableNode<String> {
             }
 
             // Perform inference
-            System.out.println("✅ Using model: " + modelName);
-            System.out.println("✅ Input data: " + inputData);
+            System.out.println(" Using model: " + modelName);
+            System.out.println(" Input data: " + inputData);
 
             String result = "Inference executed using model: " + modelName + " with input: " + inputData;
             executionLogger.logWithTag(result, "INFERENCE");
 
         } catch (InvalidMetadataException e) {
-            System.err.println("❌ Metadata error during inference: " + e.getMessage());
-            executionLogger.logWithTag("❌ Metadata error: " + e.getMessage(), "INFERENCE");
+            System.err.println(" Metadata error during inference: " + e.getMessage());
+            executionLogger.logWithTag(" Metadata error: " + e.getMessage(), "INFERENCE");
         }
     }
 
@@ -106,6 +111,6 @@ public class InferenceNode extends ExecutableNode<String> {
      */
     @Override
     public void validateOperation(String operation) {
-        System.out.println("✅ Operation '" + operation + "' is supported by InferenceNode: " + getName());
+        System.out.println(" Operation '" + operation + "' is supported by InferenceNode: " + getName());
     }
 }

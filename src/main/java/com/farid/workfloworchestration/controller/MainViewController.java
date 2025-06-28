@@ -356,20 +356,20 @@ public class MainViewController {
 
         Optional<ButtonType> result = confirmationDialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // ✅ Clear canvas visuals
+            //  Clear canvas visuals
             workspacePane.getChildren().clear();
             nodeViewsMap.clear();
             connectionArrows.clear();
 
-            // ✅ Clear backend workflow logic
+            //  Clear backend workflow logic
             mainController.clearWorkflow();
 
-            // ✅ Clear execution logs from UI
+            //  Clear execution logs from UI
             if (executionLogArea != null) {
                 executionLogArea.clear();
             }
 
-            // ✅ Reset sidebar fields
+            //  Reset sidebar fields
             if (sidebarNodeId != null) sidebarNodeId.setText("");
             if (sidebarNodeNameField != null) sidebarNodeNameField.setText("");
             if (sidebarNodeTypeCombo != null) sidebarNodeTypeCombo.setValue(null);
@@ -379,15 +379,15 @@ public class MainViewController {
                 sidebarExecutionStatusLabel.setStyle("-fx-text-fill: gray;");
             }
 
-            // ✅ Clear sidebar selection
+            //  Clear sidebar selection
             selectedSidebarNode = null;
 
-            // ✅ Update visual minimap
+            //  Update visual minimap
             updateMiniMap();
 
-            System.out.println("✅ Workspace and logs cleared successfully!");
+            System.out.println(" Workspace and logs cleared successfully!");
         } else {
-            System.out.println("⚠️ Clear workspace canceled by user.");
+            System.out.println(" Clear workspace canceled by user.");
         }
     }
 
@@ -432,17 +432,17 @@ public class MainViewController {
     private void highlightArrowThenContinue(Arrow arrow, WorkflowNode nextNode) {
         if (arrow == null || nextNode == null) return;
 
-        // 🌟 Glowing blue effect for the arrow
+        //  Glowing blue effect for the arrow
         DropShadow glow = new DropShadow();
         glow.setColor(javafx.scene.paint.Color.CORNFLOWERBLUE);
         glow.setRadius(15);
         glow.setSpread(0.4);
 
-        Line arrowLine = arrow.getLine();
-        arrowLine.setEffect(glow);
+        arrow.setGlowEffect(glow);  // ← we’ll add this method to Arrow
+
         arrow.setArrowColor(Color.CORNFLOWERBLUE);
 
-        // ✨ Pulsing animation to enhance visibility
+        //  Pulsing animation to enhance visibility
         Timeline glowTimeline = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> glow.setRadius(15)),
                 new KeyFrame(Duration.seconds(0.25), e -> glow.setRadius(25)),
@@ -451,7 +451,7 @@ public class MainViewController {
         glowTimeline.setCycleCount(2); // Pulse once
 
         glowTimeline.setOnFinished(event -> {
-            arrowLine.setEffect(null);
+            arrow.clearGlowEffect();    // ← we’ll add this too
             arrow.setArrowColor(Color.BLACK); // Revert to normal
             if (!visitedNodesGUI.contains(nextNode.getId())) {
                 executeAndHighlightNode(nextNode);
@@ -488,7 +488,7 @@ public class MainViewController {
     private void handleRenameWorkflow() {
         String newTitle = workspaceTitleField.getText().trim();
         if (!newTitle.isEmpty()) {
-            System.out.println("✅ Title changed to: " + newTitle);
+            System.out.println(" Title changed to: " + newTitle);
         } else {
             workspaceTitleField.setText("Workflow: Untitled");
         }
@@ -534,17 +534,17 @@ public class MainViewController {
 
         // Handle executable node types
         if (node instanceof ExecutableNode) {
-            System.out.println("✅ Executing node: " + node.getName());
+            System.out.println(" Executing node: " + node.getName());
             try {
                 node.execute(); // Polymorphic call
             } catch (InvalidWorkflowException e) {
-                System.err.println("❌ Execution failed for node " + node.getName() + ": " + e.getMessage());
+                System.err.println(" Execution failed for node " + node.getName() + ": " + e.getMessage());
             }
             return;
         }
 
         // Fallback for unsupported node types
-        System.out.println("⚠️ Skipped node '" + node.getName() + "' -- no execution logic for type: " + type);
+        System.out.println(" Skipped node '" + node.getName() + "' -- no execution logic for type: " + type);
     }
 
     /**
@@ -637,10 +637,11 @@ public class MainViewController {
         Arrow arrow = new Arrow(0, 0, 0, 0);
 
         // Bind arrow to follow source/target nodes
-        arrow.getLine().startXProperty().bind(sourceView.layoutXProperty().add(sourceView.widthProperty().divide(2)));
-        arrow.getLine().startYProperty().bind(sourceView.layoutYProperty().add(sourceView.heightProperty().divide(2)));
-        arrow.getLine().endXProperty().bind(targetView.layoutXProperty().add(targetView.widthProperty().divide(2)));
-        arrow.getLine().endYProperty().bind(targetView.layoutYProperty().add(targetView.heightProperty().divide(2)));
+        arrow.startXProperty().bind(sourceView.layoutXProperty().add(sourceView.widthProperty().divide(2)));
+        arrow.startYProperty().bind(sourceView.layoutYProperty().add(sourceView.heightProperty().divide(2)));
+        arrow.endXProperty().bind(targetView.layoutXProperty().add(targetView.widthProperty().divide(2)));
+        arrow.endYProperty().bind(targetView.layoutYProperty().add(targetView.heightProperty().divide(2)));
+
 
         visualArrows.add(arrow);
         workspacePane.getChildren().add(0, arrow);
@@ -908,7 +909,8 @@ public class MainViewController {
                         String connectionKey = source.getId() + "->" + target.getId();
                         Arrow arrow = connectionArrows.remove(connectionKey);
                         if (arrow != null) {
-                            action.setConnectionLabel(arrow.getLabel()); // Save label for redo
+                            action.setConnectionLabel(arrow.getLabel().getText());
+                            // Save label for redo
                             workspacePane.getChildren().remove(arrow);   // Remove arrow from view
                         }
                         System.out.println("Undo: Connection removed between " + source.getName() + " and " + target.getName());
@@ -934,7 +936,7 @@ public class MainViewController {
             // Push the action to redo stack so it can be redone later
             redoStack.push(action);
 
-            // ✅ Always refresh the minimap after any visual change
+            //  Always refresh the minimap after any visual change
             updateMiniMap();
         }
     }
@@ -1282,7 +1284,7 @@ public class MainViewController {
                 // Save label (if present) for the arrow
                 String connectionKey = connection.getSourceNode().getId() + "->" + connection.getTargetNode().getId();
                 if (connectionArrows.containsKey(connectionKey)) {
-                    String label = connectionArrows.get(connectionKey).getLabel();
+                    String label = connectionArrows.get(connectionKey).getLabel().getText();
                     if (label != null && !label.isEmpty()) {
                         connJson.put("label", label);
                     }
@@ -1615,13 +1617,13 @@ public class MainViewController {
                             nodeView.applyCss();
                             nodeView.layout();
 
-                            System.out.println("✅ Node type changed and style updated to: " + selectedType);
+                            System.out.println(" Node type changed and style updated to: " + selectedType);
 
                         } else {
-                            System.err.println("❌ ERROR: nodeTypeLabel not found in node view");
+                            System.err.println(" ERROR: nodeTypeLabel not found in node view");
                         }
                     } else {
-                        System.err.println("❌ ERROR: nodeView not found for selected node");
+                        System.err.println(" ERROR: nodeView not found for selected node");
                     }
                 }
             }
@@ -2379,12 +2381,12 @@ public class MainViewController {
             // === Final step: map ID and add to canvas ===
             nodeViewsMap.put(node.getId(), nodeView);
             workspacePane.getChildren().add(nodeView);
-            System.out.println("✅ Node added with color class. ID: " + node.getId());
+            System.out.println(" Node added with color class. ID: " + node.getId());
 
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "❌ Error loading node-view.fxml or adding node.", e);
+            LOGGER.log(Level.SEVERE, " Error loading node-view.fxml or adding node.", e);
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "❌ General error occurred while adding node.", e);
+            LOGGER.log(Level.SEVERE, " General error occurred while adding node.", e);
         }
     }
 

@@ -1,5 +1,10 @@
 package com.farid.workfloworchestration.model;
 
+// === Information Hiding Compliance ===
+// All fields are declared private and final as required.
+// Enum instances encapsulate constant metadata for each node type.
+
+
 /**
  * {@code NodeType} is an enumeration that defines all possible node types
  * in the Machine Learning Workflow Orchestration System.
@@ -20,7 +25,7 @@ package com.farid.workfloworchestration.model;
  */
 public enum NodeType {
 
-    // 🧩 General-purpose workflow types
+    //  General-purpose workflow types
     TASK("Task", "task"),
     CONDITION("Condition", "condition"),
     PREDICTION("Prediction", "prediction"),
@@ -30,7 +35,7 @@ public enum NodeType {
     DATA("Data", "data"),
     OUTPUT("Output", "output"),
 
-    // 🧠 Machine learning workflow types
+    //  Machine learning workflow types
     TRAINING("Training", "training"),
     VALIDATION("Validation", "validation"),
     TESTING("Testing", "testing"),

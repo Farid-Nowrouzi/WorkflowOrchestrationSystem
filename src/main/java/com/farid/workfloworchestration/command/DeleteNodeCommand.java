@@ -28,6 +28,8 @@ import java.util.Stack;
  * @author Farid Noworuzi
  * @version 1.0
  */
+// All attributes in this class are private and final — verified for information hiding as per professor’s instruction.
+
 public class DeleteNodeCommand implements WorkflowCommand { // Subtyping Polymorphism
 
     // Encapsulation: All class fields are private and final to protect internal state

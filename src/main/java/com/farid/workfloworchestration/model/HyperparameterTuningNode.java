@@ -25,6 +25,11 @@ import java.util.Map;
  */
 public class HyperparameterTuningNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.
+
+
     /**
      * Constructor for basic instantiation without description.
      *
@@ -52,7 +57,7 @@ public class HyperparameterTuningNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🧪 Hyperparameter Tuning node executed: searching for optimal parameters...");
+        System.out.println(" Hyperparameter Tuning node executed: searching for optimal parameters...");
     }
 
     /**
@@ -73,9 +78,9 @@ public class HyperparameterTuningNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🧪 Hyperparameter Tuning node executed with context: " + context);
+        System.out.println(" Hyperparameter Tuning node executed with context: " + context);
 
-        // ✅ Log execution
+        //  Log execution
         executionLogger.log("Hyperparameter Tuning executed with context: " + context);
     }
 

@@ -23,6 +23,11 @@ import java.util.List;
  */
 public class WorkflowServiceImpl implements WorkflowService {
 
+    // === Private Fields (Information Hiding Compliance) ===
+// These fields store internal state and are only accessible via public interface methods.
+// Ensures full encapsulation and avoids unintended external access.
+
+
     // === Internal State ===
 
     private final List<WorkflowNode> nodes = new ArrayList<>();
@@ -33,8 +38,13 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public void addNode(WorkflowNode node) {
+        if (node == null) {
+            System.out.println(" Cannot add null node.");
+            return;
+        }
         nodes.add(node);
     }
+
 
     @Override
     public void removeNode(WorkflowNode node) {
@@ -46,7 +56,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         );
 
         nodes.remove(node);
-        System.out.println("🗑️ Removed node: " + node.getName());
+        System.out.println(" Removed node: " + node.getName());
     }
 
     @Override
@@ -76,30 +86,48 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public void addConnection(WorkflowConnection connection) {
-        connections.add(connection); // Global list
+        if (connection == null || connection.getSourceNode() == null) {
+            System.out.println(" Invalid connection or source node.");
+            return;
+        }
 
-        // Update the source node's outgoing connections
-        connection.getSourceNode().addConnection(connection);
+        try {
+            connections.add(connection); // Global list
+            connection.getSourceNode().addConnection(connection); // May throw
+        } catch (Exception e) {
+            System.out.println(" Failed to add connection: " + e.getMessage());
+        }
     }
+
 
     @Override
     public void removeConnection(WorkflowNode source, WorkflowNode target) {
-        WorkflowConnection toRemove = null;
-        for (WorkflowConnection connection : connections) {
-            if (connection.getSourceNode().equals(source) &&
-                    connection.getTargetNode().equals(target)) {
-                toRemove = connection;
-                break;
-            }
+        if (source == null || target == null) {
+            System.out.println(" Source or target is null.");
+            return;
         }
 
-        if (toRemove != null) {
-            connections.remove(toRemove);
-            System.out.println("🔗 Connection removed: " + source.getName() + " → " + target.getName());
-        } else {
-            System.out.println("⚠️ No connection found between: " + source.getName() + " and " + target.getName());
+        try {
+            WorkflowConnection toRemove = null;
+            for (WorkflowConnection connection : connections) {
+                if (connection.getSourceNode().equals(source) &&
+                        connection.getTargetNode().equals(target)) {
+                    toRemove = connection;
+                    break;
+                }
+            }
+
+            if (toRemove != null) {
+                connections.remove(toRemove);
+                System.out.println(" Connection removed: " + source.getName() + " → " + target.getName());
+            } else {
+                System.out.println(" No connection found between: " + source.getName() + " and " + target.getName());
+            }
+        } catch (Exception e) {
+            System.out.println(" Error removing connection: " + e.getMessage());
         }
     }
+
 
     @Override
     public List<WorkflowConnection> getAllConnections() {
@@ -135,6 +163,6 @@ public class WorkflowServiceImpl implements WorkflowService {
     public void clearAll() {
         nodes.clear();
         connections.clear();
-        System.out.println("🧹 Cleared all workflow nodes and connections.");
+        System.out.println(" Cleared all workflow nodes and connections.");
     }
 }

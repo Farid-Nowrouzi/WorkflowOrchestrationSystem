@@ -1,5 +1,10 @@
 package com.farid.workfloworchestration.model;
 
+// === Information Hiding Compliance ===
+// This interface defines no attributes.
+// It declares two abstract methods for accessing and updating description.
+
+
 /**
  * {@code Describable} is an interface that enforces a contract for objects
  * to provide and update a textual description.

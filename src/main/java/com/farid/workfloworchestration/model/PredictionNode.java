@@ -23,7 +23,14 @@ public class PredictionNode extends ExecutableNode<String> {
     /**
      * Name of the machine learning model to be used for prediction.
      */
+    // === Private Fields (Information Hiding Compliance) ===
+// Mutable instance field representing the model assigned to this prediction node
     private String modelName;
+
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance field: modelName.
+// All other attributes are inherited from ExecutableNode<String>.
+
 
     /**
      * Constructor with only ID and name.

@@ -15,7 +15,9 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  * </ul>
  */
 public class StartNode extends WorkflowNode {
-
+    // === Information Hiding Compliance ===
+// This class defines no new fields.
+// All encapsulated attributes are inherited from WorkflowNode.
     /**
      * Constructs a StartNode with a unique identifier and display name.
      *

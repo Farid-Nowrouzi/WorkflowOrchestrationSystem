@@ -13,10 +13,12 @@ package com.farid.workfloworchestration.model;
  */
 public class WorkflowConnection {
 
-    // === Fields: Association between nodes ===
+    // === Private Fields (Information Hiding Compliance) ===
+
+    // Mutable references — allow reassignment via setters
     private WorkflowNode sourceNode;
     private WorkflowNode targetNode;
-    private String condition; // Optional condition label (e.g., "YES", "NO", etc.)
+    private String condition; // Optional condition label (e.g., "YES", "NO")
 
     /**
      * Constructor for unconditional connections.
@@ -46,7 +48,7 @@ public class WorkflowConnection {
         this.targetNode = targetNode;
         this.condition = (condition != null && !condition.isEmpty()) ? condition : null;
 
-        // ✅ Composition: Register this connection in the source node's outgoing connections
+        //  Composition: Register this connection in the source node's outgoing connections
         this.sourceNode.addOutgoingConnection(this);
     }
 

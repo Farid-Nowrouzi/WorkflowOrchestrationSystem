@@ -21,6 +21,8 @@ import com.farid.workfloworchestration.model.WorkflowNode;
 public class CreateNodeCommand implements WorkflowCommand { // Subtyping Polymorphism (via interface)
 
     // Encapsulation: All fields are private and immutable
+//  All fields follow information hiding (private + final). No external access or exposure needed.
+
     private final WorkflowNode node;                     // The new node to be added
     private final MainViewController controller;         // Composition: delegates UI work to controller
     private final WorkflowNode sourceNode;               // The node from which the connection starts

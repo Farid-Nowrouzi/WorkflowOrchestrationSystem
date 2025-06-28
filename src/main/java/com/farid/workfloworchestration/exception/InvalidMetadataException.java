@@ -21,6 +21,9 @@ package com.farid.workfloworchestration.exception;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+// === Information Hiding Compliance ===
+// No public fields. All internal state is handled by the Exception superclass.
+
 public class InvalidMetadataException extends Exception { // Inheritance, Subtyping
 
     /**

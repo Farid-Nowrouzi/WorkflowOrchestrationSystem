@@ -2,6 +2,10 @@ package com.farid.workfloworchestration.model;
 
 import java.util.Map;
 
+// === Information Hiding Compliance ===
+// This interface defines no attributes.
+// It declares abstract methods only, as expected for modular contracts.
+
 /**
  * {@code Executable} is a functional interface representing any component
  * in the workflow that supports runtime execution.

@@ -19,9 +19,13 @@ import java.util.List;
  *
  * @param <T> The type of result to be logged
  */
+// === Information Hiding Compliance ===
+// The internal list `results` is private and final. All interactions are mediated via methods.
+// No changes needed.
+
 public class GenericExecutionLogger<T> { // Parametric Polymorphism
 
-    // Encapsulation: Results list is private and not directly modifiable
+
     private final List<T> results = new ArrayList<>(); // Composition: has-a List of results
 
     /**
@@ -136,7 +140,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
      * @param score Score in double precision
      */
     public void logScore(double score) {
-        System.out.println("📊 Score logged: " + score);
+        System.out.println(" Score logged: " + score);
     }
 
     /**
@@ -149,7 +153,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
             double parsed = Double.parseDouble(scoreStr);
             logScore(parsed);
         } catch (NumberFormatException e) {
-            System.out.println("⚠️ Invalid score string: " + scoreStr);
+            System.out.println("⚠ Invalid score string: " + scoreStr);
         }
     }
 }

@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public class FeatureEngineeringNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.
+
+
     /**
      * Basic constructor without description.
      *
@@ -53,7 +58,7 @@ public class FeatureEngineeringNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🔧 Feature Engineering node executed: creating and transforming features...");
+        System.out.println(" Feature Engineering node executed: creating and transforming features...");
     }
 
     /**
@@ -73,9 +78,9 @@ public class FeatureEngineeringNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🔧 Feature Engineering node executed with context: " + context);
+        System.out.println(" Feature Engineering node executed with context: " + context);
 
-        // ✅ Log execution with generic logger
+        //  Log execution with generic logger
         executionLogger.log("FeatureEngineeringNode executed with context: " + context);
     }
 

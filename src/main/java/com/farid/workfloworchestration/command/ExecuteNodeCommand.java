@@ -16,10 +16,13 @@ import com.farid.workfloworchestration.model.ExecutableNode;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+
 public class ExecuteNodeCommand implements WorkflowCommand { // Subtyping Polymorphism
 
-    // Encapsulation: node is private and not accessible externally
+    // === Information Hiding ===
+// node is private and immutable; no external class can access or modify it.
     private final WorkflowNode node;
+
 
     /**
      * Constructs an ExecuteNodeCommand for the given node.

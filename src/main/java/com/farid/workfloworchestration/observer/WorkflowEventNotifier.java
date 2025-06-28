@@ -33,10 +33,15 @@ public class WorkflowEventNotifier {
      */
     public void addObserver(WorkflowObserver observer) {
         if (observer != null) {
-            observers.add(observer);
-            LOGGER.info("Observer added: " + observer.getClass().getSimpleName());
+            try {
+                observers.add(observer);
+                LOGGER.info("Observer added: " + observer.getClass().getSimpleName());
+            } catch (Exception e) {
+                LOGGER.warning("Failed to add observer: " + e.getMessage());
+            }
         }
     }
+
 
     /**
      * Removes a previously registered observer.
@@ -44,10 +49,17 @@ public class WorkflowEventNotifier {
      * @param observer the observer to unregister
      */
     public void removeObserver(WorkflowObserver observer) {
-        if (observer != null && observers.remove(observer)) {
-            LOGGER.info("Observer removed: " + observer.getClass().getSimpleName());
+        if (observer != null) {
+            try {
+                if (observers.remove(observer)) {
+                    LOGGER.info("Observer removed: " + observer.getClass().getSimpleName());
+                }
+            } catch (Exception e) {
+                LOGGER.warning("Failed to remove observer: " + e.getMessage());
+            }
         }
     }
+
 
     /**
      * Notifies all observers of a specific workflow node event.
@@ -59,11 +71,16 @@ public class WorkflowEventNotifier {
         if (node == null || message == null) return;
 
         for (WorkflowObserver observer : observers) {
-            observer.onNodeEvent(node, message);
+            try {
+                observer.onNodeEvent(node, message);
+            } catch (Exception e) {
+                LOGGER.warning("Failed to notify observer " + observer.getClass().getSimpleName() + ": " + e.getMessage());
+            }
         }
 
         LOGGER.fine("Notified " + observers.size() + " observers of event: " + message);
     }
+
 
     /**
      * Notifies observers with a default message.

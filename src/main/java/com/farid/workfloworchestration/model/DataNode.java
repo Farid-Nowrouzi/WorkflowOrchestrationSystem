@@ -21,6 +21,11 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  */
 public class DataNode extends WorkflowNode {
 
+    // === Information Hiding Compliance ===
+// This class defines no new fields.
+// All encapsulated attributes are inherited from WorkflowNode.
+
+
     /**
      * Constructs a DataNode with a specific ID and name.
      *
@@ -28,7 +33,7 @@ public class DataNode extends WorkflowNode {
      * @param name  Display name for the node
      */
     public DataNode(String id, String name) {
-        super(id, name, NodeType.DATA); // ✅ Inheritance and constructor chaining
+        super(id, name, NodeType.DATA); //  Inheritance and constructor chaining
     }
 
     /**

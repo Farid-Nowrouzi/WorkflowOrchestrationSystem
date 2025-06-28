@@ -32,6 +32,11 @@ import java.util.HashSet;
  */
 public class WorkflowExecutionService {
 
+    // No instance fields present.
+// Class adheres to information hiding by containing only method-local variables.
+// Logic is accessed through clean public API (executeWorkflow), with helper methods kept private.
+
+
     /**
      * Executes the workflow starting from the specified node.
      *
@@ -39,7 +44,7 @@ public class WorkflowExecutionService {
      */
     public void executeWorkflow(WorkflowNode startNode) {
         if (startNode == null) {
-            System.out.println("⚠️ Cannot execute a null node.");
+            System.out.println(" Cannot execute a null node.");
             return;
         }
 
@@ -57,30 +62,34 @@ public class WorkflowExecutionService {
     private void executeWorkflowRecursive(WorkflowNode node, Set<String> visited, int depth) {
         if (node == null || visited.contains(node.getId())) {
             if (node != null) {
-                log(depth, "🔁 Skipping already visited node: " + node.getName());
+                log(depth, " Skipping already visited node: " + node.getName());
             }
             return;
         }
 
         visited.add(node.getId());
-        log(depth, "✅ Executing node: " + node.getName() + " [" + node.getNodeType() + "]");
+        log(depth, " Executing node: " + node.getName() + " [" + node.getNodeType() + "]");
 
         try {
             node.execute();
         } catch (InvalidWorkflowException e) {
-            log(depth, "❌ Execution failed for node '" + node.getName() + "': " + e.getMessage());
+            log(depth, " Execution failed for node '" + node.getName() + "': " + e.getMessage());
+            return;
+        } catch (Exception e) {
+            log(depth, " Unexpected error while executing node '" + node.getName() + "': " + e.getMessage());
             return;
         }
+
 
         List<WorkflowConnection> outgoingConnections = node.getOutgoingConnections();
         if (outgoingConnections != null && !outgoingConnections.isEmpty()) {
             for (WorkflowConnection connection : outgoingConnections) {
                 WorkflowNode target = connection.getTargetNode();
-                log(depth + 1, "➡️ Following connection to: " + (target != null ? target.getName() : "null"));
+                log(depth + 1, " Following connection to: " + (target != null ? target.getName() : "null"));
                 executeWorkflowRecursive(target, visited, depth + 1);
             }
         } else {
-            log(depth + 1, "🛑 No further connections.");
+            log(depth + 1, " No further connections.");
         }
     }
 

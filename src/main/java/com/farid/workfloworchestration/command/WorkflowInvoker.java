@@ -15,6 +15,9 @@ import java.util.Queue;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+// === Information Hiding Compliant ===
+// Internal queue is private and fully encapsulated via public methods.
+
 public class WorkflowInvoker {
 
     // Encapsulation: The command queue is private and cannot be accessed externally

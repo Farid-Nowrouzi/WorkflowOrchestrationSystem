@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public class GNNmoduleNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.
+
+
     /**
      * Basic constructor without description.
      *
@@ -52,7 +57,7 @@ public class GNNmoduleNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🔁 GNN Module node executed: running Graph Neural Network logic...");
+        System.out.println(" GNN Module node executed: running Graph Neural Network logic...");
     }
 
     /**
@@ -72,9 +77,9 @@ public class GNNmoduleNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🔁 GNN Module node executed with context: " + context);
+        System.out.println(" GNN Module node executed with context: " + context);
 
-        // ✅ Log execution
+        //  Log execution
         executionLogger.log("GNNmoduleNode executed with context: " + context);
     }
 

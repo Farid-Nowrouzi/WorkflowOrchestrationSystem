@@ -32,8 +32,13 @@ import java.util.Map;
  */
 public class ClusteringNode extends ExecutableNode<String> { // Inheritance, Parametric Polymorphism
 
-    // Encapsulation: private internal state
+    // === Private Field (Information Hiding Compliance) ===
+// Mutable instance field defining the clustering algorithm (e.g., "K-Means", "DBSCAN")
     private String method;
+
+    // === Information Hiding Compliance ===
+// This class defines one mutable private field: method.
+// All other internal state is inherited from ExecutableNode<String> and encapsulated there.
 
     /**
      * Constructs a clustering node with an empty clustering method.
@@ -106,7 +111,7 @@ public class ClusteringNode extends ExecutableNode<String> { // Inheritance, Par
                 ? context.get("dataset")
                 : "Unknown Dataset";
 
-        String result = "🔍 Clustering applied on: " + dataset + " using method: " + method;
+        String result = " Clustering applied on: " + dataset + " using method: " + method;
 
         // Composition: uses a logger object inherited from superclass
         executionLogger.log(result); // Code Reuse, Abstraction

@@ -23,8 +23,15 @@ import java.util.Map;
  */
 public class ModelSelectionNode extends ExecutableNode<String> {
 
-    // Criteria used to select the best model (e.g., accuracy, precision)
+    // === Private Fields (Information Hiding Compliance) ===
+// Mutable instance field for model selection strategy (customizable via setter)
     private String selectionCriteria;
+
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance field: selectionCriteria.
+// All other attributes are inherited from ExecutableNode<String>.
+
+
 
     /**
      * Constructor with default selection strategy.
@@ -79,9 +86,9 @@ public class ModelSelectionNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🔍 Selecting best model using criteria: " + selectionCriteria);
+        System.out.println(" Selecting best model using criteria: " + selectionCriteria);
         String selectedModel = "Model_X"; // Placeholder logic
-        System.out.println("✅ Best model selected: " + selectedModel);
+        System.out.println(" Best model selected: " + selectedModel);
     }
 
     /**
@@ -99,8 +106,8 @@ public class ModelSelectionNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🔍 [With Context] Selecting model based on: " + selectionCriteria);
-        System.out.println("📌 Context received: " + context);
+        System.out.println(" [With Context] Selecting model based on: " + selectionCriteria);
+        System.out.println(" Context received: " + context);
 
         // Placeholder logic — in real scenario, models would be compared
         String result = "Selected best model with context using: " + selectionCriteria;

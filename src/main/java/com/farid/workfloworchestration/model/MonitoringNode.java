@@ -23,6 +23,11 @@ import java.util.Map;
  */
 public class MonitoringNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.
+
+
     /**
      * Constructor for basic monitoring node with default description.
      *
@@ -49,8 +54,8 @@ public class MonitoringNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("📈 Monitoring in progress for: " + getName());
-        System.out.println("✅ System status and metrics are being collected...");
+        System.out.println(" Monitoring in progress for: " + getName());
+        System.out.println(" System status and metrics are being collected...");
     }
 
     /**
@@ -69,7 +74,7 @@ public class MonitoringNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🛠 Monitoring with context: " + context);
+        System.out.println(" Monitoring with context: " + context);
         executionLogger.log("MonitoringNode executed with context: " + context);
     }
 

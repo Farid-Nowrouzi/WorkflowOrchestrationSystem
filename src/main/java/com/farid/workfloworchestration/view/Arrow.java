@@ -3,6 +3,7 @@ package com.farid.workfloworchestration.view;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -25,6 +26,9 @@ import javafx.util.Duration;
  * </ul>
  */
 public class Arrow extends Group {
+    // === Private Fields (Information Hiding Fully Applied) ===
+    // All internal fields are private and accessed only via public methods where needed.
+
 
     private final Line line;
     private final Polygon arrowHead;
@@ -146,13 +150,32 @@ public class Arrow extends Group {
         Tooltip.install(label, tooltip);
     }
 
-    public String getLabel() {
-        return label.getText();
+    // === Safe replacements for encapsulated access ===
+
+    // Get start coordinates
+    public double getStartX() {
+        return line.getStartX();
     }
 
-    public Line getLine() {
-        return line;
+    public double getStartY() {
+        return line.getStartY();
     }
+
+    // Get end coordinates
+    public double getEndX() {
+        return line.getEndX();
+    }
+
+    public double getEndY() {
+        return line.getEndY();
+    }
+
+    // Get stroke color (if needed)
+    public Color getArrowColor() {
+        return (Color) line.getStroke();
+    }
+
+
 
     public void highlight() {
         isHighlighted = true;
@@ -184,4 +207,49 @@ public class Arrow extends Group {
     public void restartAnimation() {
         if (flowAnimation != null) flowAnimation.play();
     }
+
+    public void setGlowEffect(javafx.scene.effect.Effect effect) {
+        line.setEffect(effect);
+    }
+
+    public void clearGlowEffect() {
+        line.setEffect(null);
+    }
+
+    public DoubleProperty startXProperty() {
+        return line.startXProperty();
+    }
+
+    public DoubleProperty startYProperty() {
+        return line.startYProperty();
+    }
+
+    public DoubleProperty endXProperty() {
+        return line.endXProperty();
+    }
+
+    public DoubleProperty endYProperty() {
+        return line.endYProperty();
+    }
+
+    // === Public Accessors for MainViewController ===
+
+    /**
+     * Returns the internal Line used for the arrow's shaft.
+     * This is needed for binding start/end properties.
+     */
+    public Line getLine() {
+        return line;
+    }
+
+    /**
+     * Returns the label associated with this arrow.
+     * Used for saving or modifying the connection label.
+     */
+    public Label getLabel() {
+        return label;
+    }
+
+
+
 }

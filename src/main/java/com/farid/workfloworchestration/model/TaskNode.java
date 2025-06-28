@@ -21,9 +21,14 @@ import java.util.Map;
  */
 public class TaskNode extends ExecutableNode<String> {
 
-    // Describes what the task does (customizable per instance)
+    // === Private Fields (Information Hiding Compliance) ===
+
+    // Instance-based mutable field — allows customization via setter
     private String taskDetails;
 
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance field (taskDetails).
+// All other attributes are inherited from ExecutableNode<String>.
     /**
      * Constructs a TaskNode with default task details.
      */
@@ -80,7 +85,7 @@ public class TaskNode extends ExecutableNode<String> {
     public void execute() {
         System.out.println("Executing task: " + getName() + " -> " + taskDetails);
 
-        // ✅ Demonstrates use of parametric polymorphism (Generics)
+        //  Demonstrates use of parametric polymorphism (Generics)
         MetadataPrinter<Map<String, String>> printer = new MetadataPrinter<>();
         printer.printMetadata(getMetadata());
     }

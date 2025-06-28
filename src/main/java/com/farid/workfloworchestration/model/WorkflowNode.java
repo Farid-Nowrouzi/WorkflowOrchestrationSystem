@@ -25,18 +25,20 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  */
 public abstract class WorkflowNode implements Describable {
 
-    // === Private Fields (Encapsulation) ===
+    // === Private Fields (Information Hiding Compliance) ===
 
+    // Instance-based mutable fields (can change via setters)
     private String id;
     private String name;
     private String description;
     private NodeType nodeType;
-    private Map<String, String> metadata;
-    private LocalDateTime createdAt;
     private String details = "";
+    private String colorHex = "#ffffff"; // Optional customization
 
-    private final List<WorkflowConnection> outgoingConnections = new ArrayList<>();
-    private String colorHex = "#ffffff"; // Optional future customization
+    // Instance-based constant fields (initialized once, never reassigned)
+    private final LocalDateTime createdAt = LocalDateTime.now(); // creation timestamp
+    private final Map<String, String> metadata = new HashMap<>(); // shared metadata
+    private final List<WorkflowConnection> outgoingConnections = new ArrayList<>(); // connections
 
     // === Constructors (Overloading + Encapsulation) ===
 
@@ -44,8 +46,7 @@ public abstract class WorkflowNode implements Describable {
         this.id = id;
         this.name = name;
         this.nodeType = nodeType;
-        this.metadata = new HashMap<>();
-        this.createdAt = LocalDateTime.now();
+
     }
 
     public WorkflowNode(String id, String name, String description, NodeType nodeType) {

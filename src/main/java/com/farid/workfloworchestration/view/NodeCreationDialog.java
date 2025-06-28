@@ -25,10 +25,14 @@ import java.util.Optional;
  */
 public class NodeCreationDialog extends Dialog<NodeCreationDialog.NodeResult> {
 
+    // === Private Fields (Information Hiding Applied) ===
+    // These UI controls are used only internally. External access is intentionally abstracted via NodeResult.
+
+
     // === Form Fields ===
     private final ComboBox<NodeType> nodeTypeComboBox = new ComboBox<>();
     private final TextField nodeNameField = new TextField();
-    private final TextArea detailsArea = new TextArea(); // ✅ Multiline input for rich node description
+    private final TextArea detailsArea = new TextArea(); //  Multiline input for rich node description
 
     /**
      * Constructor – Initializes the dialog layout, input fields, and validation logic.
@@ -145,6 +149,6 @@ public class NodeCreationDialog extends Dialog<NodeCreationDialog.NodeResult> {
     public static class NodeResult {
         public NodeType nodeType;
         public String nodeName;
-        public String details; // ✅ Custom notes or logic attached to the node
+        public String details; //  Custom notes or logic attached to the node
     }
 }

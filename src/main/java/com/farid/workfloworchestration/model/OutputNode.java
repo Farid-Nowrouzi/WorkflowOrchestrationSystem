@@ -16,6 +16,11 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  */
 public class OutputNode extends WorkflowNode {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All fields are inherited from WorkflowNode and are already encapsulated.
+
+
     /**
      * Constructor that initializes the node with a unique ID and name.
      *

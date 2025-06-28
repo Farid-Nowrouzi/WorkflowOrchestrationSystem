@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public class ExplainabilityNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.
+
+
     /**
      * Constructor for a basic ExplainabilityNode without description.
      *
@@ -53,7 +58,7 @@ public class ExplainabilityNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🧠 Explainability node executed: generating feature attributions for model prediction...");
+        System.out.println(" Explainability node executed: generating feature attributions for model prediction...");
     }
 
     /**
@@ -73,9 +78,9 @@ public class ExplainabilityNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🧠 Explainability node executed with context: " + context);
+        System.out.println(" Explainability node executed with context: " + context);
 
-        // ✅ Log output to generic execution logger
+        //  Log output to generic execution logger
         executionLogger.log("ExplainabilityNode executed with context: " + context);
     }
 

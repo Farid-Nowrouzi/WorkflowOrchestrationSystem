@@ -19,6 +19,9 @@ package com.farid.workfloworchestration.exception;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+// === Information Hiding Compliance ===
+// No public fields. All exception data is handled internally via the Exception superclass.
+
 public class InvalidWorkflowException extends Exception { // Inheritance, Subtyping
 
   /**

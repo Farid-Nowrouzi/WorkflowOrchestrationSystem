@@ -20,6 +20,9 @@ import java.util.Map;
  */
 public class TrainingNode extends ExecutableNode<String> {
 
+    // === Information Hiding Compliance ===
+// This class defines no new fields.
+// All attribute encapsulation is inherited from ExecutableNode<String>.
     /**
      * Constructor with ID and name.
      */
@@ -40,13 +43,13 @@ public class TrainingNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🏋️ Training node executed: " + getName());
-        System.out.println("📈 Model training in progress... (loading data, optimizing weights, etc.)");
+        System.out.println(" Training node executed: " + getName());
+        System.out.println(" Model training in progress... (loading data, optimizing weights, etc.)");
 
-        // ✅ Logging basic execution
+        //  Logging basic execution
         executionLogger.log("TrainingNode basic execution for: " + getName());
 
-        // ✅ Coercion Polymorphism: Implicit conversion to String
+        //  Coercion Polymorphism: Implicit conversion to String
         int epochCount = 5;
         double loss = 0.134;
 
@@ -69,12 +72,12 @@ public class TrainingNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🧠 Training with context: " + context + " for node: " + getName());
+        System.out.println(" Training with context: " + context + " for node: " + getName());
 
-        // ✅ Context-aware logging with a tagged message
+        //  Context-aware logging with a tagged message
         executionLogger.logWithTag("TrainingNode executed with context: " + context, "TRAINING");
 
-        // ✅ Coercion Polymorphism
+        //  Coercion Polymorphism
         double accuracy = 0.92;
         executionLogger.log("Accuracy: " + accuracy);  // double → String
     }

@@ -22,8 +22,13 @@ public class PreprocessingNode extends ExecutableNode<String> {
     /**
      * Defines the preprocessing strategy to apply (e.g., normalization, scaling).
      */
+    // === Private Fields (Information Hiding Compliance) ===
+// Mutable instance field, user-defined through constructor or setter
     private String preprocessingSteps;
 
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance field: preprocessingSteps.
+// All other attributes are inherited from ExecutableNode<String>.
     /**
      * Basic constructor with default preprocessing steps.
      *

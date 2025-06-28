@@ -15,8 +15,14 @@ import java.util.List;
 public class WorkflowGroup {
 
     // === Private Fields (Information Hiding) ===
+    // === Private Fields (Information Hiding Compliance) ===
+
+    // Mutable instance attributes
     private String groupName;
-    private List<WorkflowNode> members;
+
+    // Constant reference (final), but mutable contents (list can change)
+    private final List<WorkflowNode> members;
+
 
     /**
      * Constructs a new group with a given name and list of member nodes.
@@ -44,9 +50,6 @@ public class WorkflowGroup {
         return members;
     }
 
-    public void setMembers(List<WorkflowNode> members) {
-        this.members = members;
-    }
 
     // === Utility Methods ===
 

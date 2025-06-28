@@ -31,9 +31,13 @@ public class WorkflowValidationService {
      * @param allNodes  The full list of nodes in the workflow (used for reachability checks).
      * @return {@code true} if the workflow is valid; {@code false} otherwise.
      */
+    // This class follows full OOP encapsulation rules.
+// No mutable fields are exposed, and all internal logic (cycle detection, traversal)
+// is private and accessed only via the public validateWorkflow() method.
+
     public boolean validateWorkflow(WorkflowNode startNode, List<WorkflowNode> allNodes) {
         if (startNode == null) {
-            System.out.println("❌ Validation failed: Start node is null.");
+            System.out.println(" Validation failed: Start node is null.");
             return false;
         }
 
@@ -41,7 +45,7 @@ public class WorkflowValidationService {
         Set<WorkflowNode> visited = new HashSet<>();
         Set<WorkflowNode> recursionStack = new HashSet<>();
         if (detectCycle(startNode, visited, recursionStack)) {
-            System.out.println("❌ Validation failed: Cycle detected in workflow.");
+            System.out.println(" Validation failed: Cycle detected in workflow.");
             return false;
         }
 
@@ -52,11 +56,11 @@ public class WorkflowValidationService {
 
             for (WorkflowNode node : allNodes) {
                 if (!reachable.contains(node)) {
-                    System.out.println("⚠️ Unreachable node: " + node.getName() + " (" + node.getId() + ")");
+                    System.out.println(" Unreachable node: " + node.getName() + " (" + node.getId() + ")");
                 }
             }
 
-            System.out.println("✅ Reachable nodes: " + reachable.size() + "/" + allNodes.size());
+            System.out.println(" Reachable nodes: " + reachable.size() + "/" + allNodes.size());
         }
 
         // Step 3: Warn about logical errors in node structure
@@ -67,12 +71,12 @@ public class WorkflowValidationService {
 
             // TASK nodes should only have a single outgoing path
             if ("TASK".equalsIgnoreCase(node.getNodeType().toString()) && outgoing > 1) {
-                System.out.println("⚠️ Task node '" + node.getName() +
+                System.out.println(" Task node '" + node.getName() +
                         "' has " + outgoing + " outgoing connections. Consider splitting the logic.");
             }
         }
 
-        System.out.println("✅ Workflow validation passed.");
+        System.out.println(" Workflow validation passed.");
         return true;
     }
 

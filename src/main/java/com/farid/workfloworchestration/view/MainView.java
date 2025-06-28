@@ -30,6 +30,10 @@ import java.util.Objects;
  */
 public class MainView {
 
+    // === Private Fields (Information Hiding Fully Applied) ===
+    // Fields are internally scoped and access is controlled through constructor and local usage.
+
+
     private static final String MAIN_VIEW_FXML = "/com/farid/workfloworchestration/main-view.fxml";
     private static final String NODE_VIEW_FXML = "/com/farid/workfloworchestration/node-view.fxml";
 
@@ -61,7 +65,7 @@ public class MainView {
 
             MainController mainController = new MainController(workflowService, eventNotifier);
             viewController.setMainController(mainController);                          // Link Controller to View
-            mainController.setMainViewController(viewController);                      // Link View to Controller 🔁
+            mainController.setMainViewController(viewController);                      // Link View to Controller
 
             // === Scene Setup ===
             Scene scene = new Scene(root);
@@ -77,10 +81,10 @@ public class MainView {
             primaryStage.show();
 
         } catch (IOException e) {
-            System.err.println("❌ Error loading main view FXML:");
+            System.err.println(" Error loading main view FXML:");
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.err.println("❌ FXML path or CSS not found: " + MAIN_VIEW_FXML);
+            System.err.println(" FXML path or CSS not found: " + MAIN_VIEW_FXML);
             e.printStackTrace();
         }
     }
@@ -95,7 +99,7 @@ public class MainView {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(NODE_VIEW_FXML)));
             Parent nodeView = loader.load();
 
-            // ✅ Apply CSS styling to the loaded node view
+            //  Apply CSS styling to the loaded node view
             nodeView.getStylesheets().add(
                     Objects.requireNonNull(getClass().getResource("/com/farid/workfloworchestration/style.css"))
                             .toExternalForm()
@@ -104,11 +108,11 @@ public class MainView {
             return nodeView;
 
         } catch (IOException e) {
-            System.err.println("❌ Error loading node view FXML:");
+            System.err.println(" Error loading node view FXML:");
             e.printStackTrace();
             return null;
         } catch (NullPointerException e) {
-            System.err.println("❌ FXML or CSS not found for node-view: " + NODE_VIEW_FXML);
+            System.err.println(" FXML or CSS not found for node-view: " + NODE_VIEW_FXML);
             e.printStackTrace();
             return null;
         }

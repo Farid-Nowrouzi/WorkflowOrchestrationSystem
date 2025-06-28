@@ -22,6 +22,11 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
  */
 public class EndNode extends WorkflowNode {
 
+    // === Information Hiding Compliance ===
+// This class defines no new fields.
+// All attributes are inherited from WorkflowNode and are already encapsulated.
+
+
     /**
      * Constructs an {@code EndNode} with a unique identifier and label.
      *
@@ -47,7 +52,7 @@ public class EndNode extends WorkflowNode {
      */
     @Override
     public void execute() {
-        System.out.println("🔚 End node reached. No further action.");
+        System.out.println(" End node reached. No further action.");
     }
 
     /**

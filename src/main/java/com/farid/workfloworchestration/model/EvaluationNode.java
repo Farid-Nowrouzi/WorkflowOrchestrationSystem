@@ -26,10 +26,17 @@ import java.util.Map;
  */
 public class EvaluationNode extends ExecutableNode<String> {
 
-    // === Encapsulated Field (Evaluation Strategy) ===
+    // === Private Field (Information Hiding Compliance) ===
+// Mutable instance field for specifying the evaluation metric (e.g., accuracy, F1-score)
     private String evaluationMetric;
 
+
     // === Constructors (Overloaded - Ad-hoc Polymorphism) ===
+
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance attribute: evaluationMetric.
+// All other fields are inherited from ExecutableNode<String>.
+
 
     /**
      * Constructs an EvaluationNode with a default metric ("accuracy").
@@ -72,7 +79,7 @@ public class EvaluationNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("📈 Evaluating model using metric: " + evaluationMetric +
+        System.out.println(" Evaluating model using metric: " + evaluationMetric +
                 " in node: " + getName());
     }
 
@@ -83,10 +90,10 @@ public class EvaluationNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("📈 Evaluation with context: " + context +
+        System.out.println(" Evaluation with context: " + context +
                 " using metric: " + evaluationMetric);
 
-        // ✅ Log the execution result using generic logger
+        //  Log the execution result using generic logger
         executionLogger.log("EvaluationNode executed with metric: " +
                 evaluationMetric + " and context: " + context);
     }

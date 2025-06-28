@@ -16,6 +16,9 @@ package com.farid.workfloworchestration.command;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+// === Abstraction Interface ===
+// No internal state to hide — information hiding not applicable here.
+
 public interface WorkflowCommand { // Interface-Based Abstraction
 
     /**

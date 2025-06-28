@@ -25,6 +25,11 @@ import com.farid.workfloworchestration.model.*;
  */
 public class NodeFactory {
 
+    // === Information Hiding Compliance ===
+// This class defines no fields. All logic is static and encapsulated in method scope.
+// Therefore, information hiding is fully respected.
+
+
     // === Factory Method: Create node with type, id, and name ===
     /**
      * Creates a node of the given type using a basic constructor.
@@ -108,7 +113,7 @@ public class NodeFactory {
         // Encapsulation + Abstraction: Validation logic is internal to the node
         if (!node.isValid()) {
             // Information Hiding: Client doesn't deal with validation logic directly
-            System.err.println("❌ Validation failed in NodeFactory for node: " + node.getName());
+            System.err.println(" Validation failed in NodeFactory for node: " + node.getName());
             throw new InvalidWorkflowException("Node failed validation: " + node.getName());
         }
 

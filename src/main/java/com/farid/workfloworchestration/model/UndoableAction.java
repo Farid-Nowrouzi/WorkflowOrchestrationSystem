@@ -28,22 +28,23 @@ public class UndoableAction {
         DISCONNECT_NODES
     }
 
-    // === Encapsulated (private) fields ===
+    // === Private Fields (Information Hiding Compliance) ===
 
+    // Immutable action classification
     private final ActionType actionType;
 
-    // For node-related actions
+    // Immutable node-related coordinates and references
     private final WorkflowNode node;
     private final double oldX;
     private final double oldY;
     private final double newX;
     private final double newY;
 
-    // For connection-related actions
+    // Immutable source/target reference for connections
     private final WorkflowNode sourceNode;
     private final WorkflowNode targetNode;
 
-    // For DELETE_NODE actions: store deleted connections
+    // Mutable fields (can change after construction via setters)
     private List<WorkflowConnection> savedConnections;
     private String connectionLabel;
 

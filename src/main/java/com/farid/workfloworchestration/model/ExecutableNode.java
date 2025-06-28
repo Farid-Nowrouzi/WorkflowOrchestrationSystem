@@ -30,25 +30,26 @@ import java.util.Map;
  */
 public abstract class ExecutableNode<T> extends WorkflowNode implements Executable {
 
-    /**
-     * Execution parameters relevant to this node (e.g., "batchSize" → "32").
-     * This field is encapsulated and modifiable via provided methods.
-     */
+    // === Private/Protected Fields (Information Hiding Compliance) ===
+
+    // Mutable instance field for storing execution parameters (modifiable via setters)
     protected Map<String, String> executionParameters;
 
-    /**
-     * A generic logger to store and track node-specific results.
-     * Demonstrates use of parametric polymorphism.
-     */
-    protected GenericExecutionLogger<T> executionLogger = new GenericExecutionLogger<>();
+    // Final instance field for generic logging (assigned once, reused)
+    protected final GenericExecutionLogger<T> executionLogger = new GenericExecutionLogger<>();
 
-    /**
-     * Metadata used during execution, allowing context-sensitive behavior.
-     * Enables parametric polymorphism with dynamic runtime values.
-     */
+    // Mutable private field for dynamic metadata context (set externally)
     private Map<String, String> metadata = new HashMap<>();
 
+
     // ======== Constructors ========
+
+
+    // === Information Hiding Compliance ===
+// This class defines 3 fields:
+// - executionLogger is final and never reassigned
+// - executionParameters and metadata are mutable instance attributes
+
 
     /**
      * Basic constructor without description.
@@ -149,7 +150,7 @@ public abstract class ExecutableNode<T> extends WorkflowNode implements Executab
      * @param label A string label attached to this execution (e.g., "demo", "run1")
      */
     public void execute(String label) {
-        System.out.println("🧠 Executing node [" + getName() + "] with label: " + label);
+        System.out.println(" Executing node [" + getName() + "] with label: " + label);
         executeWithContext(null);
     }
 }

@@ -25,8 +25,15 @@ import java.util.Map;
  */
 public class EnsembleNode extends ExecutableNode<String> {
 
-    // === Encapsulated Field ===
+    // === Private Field (Information Hiding Compliance) ===
+// Mutable instance field for specifying the ensemble strategy (e.g., voting, stacking)
     private String ensembleStrategy;
+
+    // === Information Hiding Compliance ===
+// This class defines one mutable instance attribute: ensembleStrategy.
+// All other attributes are inherited from ExecutableNode<String>.
+
+
 
     /**
      * Constructs an EnsembleNode with a specific strategy.
@@ -68,7 +75,7 @@ public class EnsembleNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("📊 Executing ensemble node: " + getName() +
+        System.out.println(" Executing ensemble node: " + getName() +
                 " using strategy: " + ensembleStrategy);
     }
 
@@ -79,7 +86,7 @@ public class EnsembleNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("📊 Ensemble node context execution: " +
+        System.out.println(" Ensemble node context execution: " +
                 context + " | Strategy: " + ensembleStrategy);
 
         // Log the result using generic logger (parametric polymorphism)

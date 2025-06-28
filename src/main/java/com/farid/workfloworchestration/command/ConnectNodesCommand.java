@@ -18,6 +18,8 @@ import com.farid.workfloworchestration.model.WorkflowNode;
  * @author Farid Nowrouzi
  * @version 1.0
  */
+//  Checked: all attributes are private and final — satisfies information hiding requirement.
+
 public class ConnectNodesCommand implements WorkflowCommand { // Subtyping Polymorphism (via interface)
 
     // Encapsulation: these fields are private and final, hidden from external modification

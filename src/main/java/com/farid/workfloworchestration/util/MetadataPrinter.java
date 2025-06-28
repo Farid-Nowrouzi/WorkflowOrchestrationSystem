@@ -15,6 +15,11 @@ import java.util.Map;
  *
  * @param <T> A type that extends {@code Map<?, ?>}, allowing support for any key-value metadata.
  */
+
+//  No fields defined – class is stateless and safe by design.
+// All logic is accessed through overloaded printMetadata(...) methods.
+// Fully compliant with abstraction and information hiding principles.
+
 public class MetadataPrinter<T extends Map<?, ?>> {
 
     /**
@@ -24,7 +29,7 @@ public class MetadataPrinter<T extends Map<?, ?>> {
      */
     public void printMetadata(T metadata) {
         if (metadata == null || metadata.isEmpty()) {
-            System.out.println("⚠️ Metadata is empty.");
+            System.out.println(" Metadata is empty.");
             return;
         }
         metadata.forEach((k, v) -> System.out.println("Key: " + k + ", Value: " + v));

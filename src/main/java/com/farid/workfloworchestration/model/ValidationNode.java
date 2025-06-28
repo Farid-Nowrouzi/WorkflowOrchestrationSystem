@@ -26,6 +26,9 @@ public class ValidationNode extends ExecutableNode<String> {
     public ValidationNode(String id, String name) {
         super(id, name, NodeType.VALIDATION);
     }
+// === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All attribute encapsulation is inherited from ExecutableNode<String>.
 
     /**
      * Constructor with ID, name, and custom description.
@@ -40,8 +43,8 @@ public class ValidationNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("✅ Validation node executed: " + getName());
-        System.out.println("🧪 Validating model on hold-out dataset... (checking overfitting, generalization, etc.)");
+        System.out.println(" Validation node executed: " + getName());
+        System.out.println(" Validating model on hold-out dataset... (checking overfitting, generalization, etc.)");
     }
 
     /**
@@ -50,7 +53,7 @@ public class ValidationNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🔍 Validation with context: " + context + " for node: " + getName());
+        System.out.println(" Validation with context: " + context + " for node: " + getName());
         executionLogger.log("ValidationNode executed with context: " + context);
     }
 

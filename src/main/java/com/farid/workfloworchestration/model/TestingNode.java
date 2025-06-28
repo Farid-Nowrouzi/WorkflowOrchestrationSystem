@@ -18,7 +18,9 @@ import java.util.Map;
  * </ul>
  */
 public class TestingNode extends ExecutableNode<String> {
-
+    // === Information Hiding Compliance ===
+// This class defines no new attributes.
+// All encapsulated fields are inherited from ExecutableNode<String>.`
     /**
      * Constructor for a basic TestingNode with ID and name.
      */
@@ -39,8 +41,8 @@ public class TestingNode extends ExecutableNode<String> {
      */
     @Override
     public void execute() {
-        System.out.println("🧪 Testing node executed: " + getName());
-        System.out.println("➡️ Evaluating model on held-out test data to measure generalization...");
+        System.out.println(" Testing node executed: " + getName());
+        System.out.println(" Evaluating model on held-out test data to measure generalization...");
     }
 
     /**
@@ -58,7 +60,7 @@ public class TestingNode extends ExecutableNode<String> {
      */
     @Override
     public void executeWithContext(Map<String, String> context) {
-        System.out.println("🧾 Running testing with context: " + context + " for node: " + getName());
+        System.out.println(" Running testing with context: " + context + " for node: " + getName());
         executionLogger.log("TestingNode executed with context: " + context);
     }
 
