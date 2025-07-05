@@ -79,7 +79,7 @@ public class PreprocessingNode extends ExecutableNode<String> {
                 ? context.get("dataset")
                 : "Unknown Dataset";
 
-        String result = "🧹 Preprocessed: " + dataset + " using steps: " + preprocessingSteps;
+        String result = "Preprocessed: " + dataset + " using steps: " + preprocessingSteps;
 
         // Log result using the generic logger
         executionLogger.log(result);

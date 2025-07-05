@@ -1,6 +1,9 @@
 package com.farid.workfloworchestration.model;
 
 import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeException;
+import com.farid.workfloworchestration.util.MetadataPrinter;
+
+import java.util.Map;
 
 /**
  * Represents a node responsible for executing an analysis step in the workflow.
@@ -24,10 +27,10 @@ import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeExce
 public class AnalysisNode extends WorkflowNode { // Inheritance
 
     // === Private Field (Information Hiding Compliance) ===
-// Mutable internal field representing the analysis type (e.g., "Statistical").
-// It is set only via constructor and not exposed through any setter.
-
     private String analysisType;
+
+    // === Metadata Printer (Aggregation) ===
+    private final MetadataPrinter<Map<String, String>> metadataPrinter = new MetadataPrinter<>();
 
     /**
      * Constructs an AnalysisNode with the given ID, name, and analysis type.
@@ -47,8 +50,13 @@ public class AnalysisNode extends WorkflowNode { // Inheritance
      * Demonstrates polymorphic behavior via method overriding.
      */
     @Override
-    public void execute() { // Subtyping Polymorphism: override base method
+    public void execute() { // Subtyping Polymorphism
         System.out.println("Running analysis: " + analysisType);
+
+        // === Demonstrate MetadataPrinter usage (Aggregation + Utility) ===
+        System.out.println(" Executing with metadata:");
+        metadataPrinter.printMetadata(getMetadata()); // General print
+        metadataPrinter.printMetadata(getMetadata(), "[ANALYSIS]", "type"); // Prefixed + filtered
     }
 
     /**
@@ -57,8 +65,8 @@ public class AnalysisNode extends WorkflowNode { // Inheritance
      * @return true if analysis type is non-null and not blank
      */
     @Override
-    public boolean isValid() { // Subtyping Polymorphism
-        return analysisType != null && !analysisType.isBlank(); // Abstraction: hides internal check
+    public boolean isValid() {
+        return analysisType != null && !analysisType.isBlank();
     }
 
     /**
@@ -69,7 +77,6 @@ public class AnalysisNode extends WorkflowNode { // Inheritance
      */
     @Override
     public void validateOperation(String operation) throws UnsupportedOperationForNodeException {
-        // Defensive Programming: Restricts unsupported behavior
         throw new UnsupportedOperationForNodeException("Operation '" + operation + "' is not supported by node: " + getName());
     }
 }

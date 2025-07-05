@@ -86,7 +86,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
      * @param message The message to log
      */
     public void logString(String message) { // Ad-hoc Polymorphism
-        System.out.println("📝 Logged message: " + message);
+        System.out.println("Logged message: " + message);
     }
 
     /**
@@ -98,7 +98,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
     public void logString(String message, boolean withTimestamp) { // Ad-hoc Polymorphism
         if (withTimestamp) {
             String timestamp = "[" + java.time.LocalTime.now().withNano(0) + "] ";
-            System.out.println(timestamp + "📘 " + message);
+            System.out.println(timestamp  + message);
         } else {
             logString(message);
         }
@@ -111,7 +111,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
      * @param tag A label describing the context
      */
     public void logWithTag(T result, String tag) { // Ad-hoc Polymorphism
-        System.out.println("🔖 [" + tag + "] " + result);
+        System.out.println("[" + tag + "] " + result);
     }
 
     // ===== Coercion Polymorphism: Type conversions for logScore =====
@@ -153,7 +153,7 @@ public class GenericExecutionLogger<T> { // Parametric Polymorphism
             double parsed = Double.parseDouble(scoreStr);
             logScore(parsed);
         } catch (NumberFormatException e) {
-            System.out.println("⚠ Invalid score string: " + scoreStr);
+            System.out.println(" Invalid score string: " + scoreStr);
         }
     }
 }

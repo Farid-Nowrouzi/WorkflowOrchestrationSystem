@@ -4,6 +4,7 @@ import com.farid.workfloworchestration.command.ConnectNodesCommand;
 import com.farid.workfloworchestration.command.WorkflowInvoker;
 import com.farid.workfloworchestration.exception.InvalidWorkflowException;
 import com.farid.workfloworchestration.execution.GenericExecutionLogger;
+import com.farid.workfloworchestration.factory.NodeFactory;
 import com.farid.workfloworchestration.model.*;
 import com.farid.workfloworchestration.service.WorkflowValidationService;
 import com.farid.workfloworchestration.view.NodeCreationDialog;
@@ -110,7 +111,7 @@ public class MainViewController {
     @FXML
     private Label sidebarExecutionStatus;      // Label that shows execution status (Running, Done, etc.)
     @FXML
-    private Label sidebarExecutionStatusLabel; // [Optional] Duplicate or placeholder for status styling
+    private Label sidebarExecutionStatusLabel; //  Duplicate or placeholder for status styling
 
     // === Workspace title editing ===
 
@@ -217,6 +218,12 @@ public class MainViewController {
 
     /** Title of the current workflow shown in the UI. */
     private String currentWorkflowFilename = "Untitled Workflow";
+
+    private final GenericExecutionLogger<String> executionLogger = new GenericExecutionLogger<>();
+
+    private final GenericExecutionLogger<Map<String, String>> globalLogger = new GenericExecutionLogger<>();
+
+
 
 // === UI Event Handlers ===
 
@@ -367,6 +374,9 @@ public class MainViewController {
             //  Clear execution logs from UI
             if (executionLogArea != null) {
                 executionLogArea.clear();
+                GenericExecutionLogger<Object> logger = new GenericExecutionLogger<>();
+                logger.clear();  // Clear all logged results
+
             }
 
             //  Reset sidebar fields
@@ -1418,6 +1428,8 @@ public class MainViewController {
 
 
 
+
+
     /**
      * Opens a dialog to edit the name of a selected workflow node.
      * If a new name is provided, both the internal data and the visual label are updated.
@@ -1454,6 +1466,8 @@ public class MainViewController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
+
 
 
     /**
@@ -1817,6 +1831,13 @@ public class MainViewController {
 // Set up the title editing and saving buttons
         editTitleButton.setOnAction(e -> handleEditTitle());
         saveTitleButton.setOnAction(e -> handleRenameWorkflow());
+
+        Platform.runLater(() -> createSampleNodesUsingAllFactoryOverloads());
+
+
+
+
+
     }
 
     /**
@@ -1926,11 +1947,18 @@ public class MainViewController {
     @FXML
     private void handleExecuteWorkflow() {
         if (mainController != null) {
-            visitedNodesGUI.clear();  // Clear previously executed nodes for a fresh run
+            visitedNodesGUI.clear();  // Fresh run
 
-            // Retrieve all start nodes in the workflow
+            // === Setup logger ===
+            GenericExecutionLogger<String> executionLogger = new GenericExecutionLogger<>();
+
+            // Clear any old logs (demonstrates clear())
+            executionLogger.clear();
+
+            // Check for start nodes
             List<WorkflowNode> startNodes = mainController.getWorkflowService().findStartNodes();
             if (startNodes.isEmpty()) {
+                executionLogger.logString(" No START node found. Execution aborted.");
                 System.out.println("No start node found. Cannot execute workflow.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Validation Error");
@@ -1940,20 +1968,46 @@ public class MainViewController {
                 return;
             }
 
-            WorkflowNode startNode = startNodes.get(0);  // Use the first start node found
+            WorkflowNode startNode = startNodes.get(0);  // First START node
 
-            // Run validation before executing
             WorkflowValidationService validator = new WorkflowValidationService();
             boolean valid = validator.validateWorkflow(startNode, mainController.getWorkflowService().getAllNodes());
 
             if (valid) {
-                // If the workflow is valid, execute each start node
+                executionLogger.logString("Workflow validation passed. Starting execution...");
+
+                // Execute all start nodes
                 for (WorkflowNode node : startNodes) {
+                    String msg = "Executing: " + node.getName() + " [" + node.getNodeType() + "]";
+                    executionLogger.logResult(msg); // Using generic logResult
                     executeAndHighlightNode(node);
                 }
-                System.out.println("Workflow execution started!");
+
+                executionLogger.logString(" Workflow execution completed successfully.");
+
+                // === Demonstrate all logger methods (polymorphism coverage) ===
+                executionLogger.logString(" Timestamped log test", true); // Ad-hoc polymorphism (boolean overload)
+                executionLogger.logWithTag("Execution completed cleanly.", " STATUS"); // Ad-hoc polymorphism (tagged result)
+                executionLogger.logScore(22);         // Coercion polymorphism: int → double
+                executionLogger.logScore(18.5f);      // Coercion polymorphism: float → double
+                executionLogger.logScore("25.0");     // Coercion polymorphism: String → double
+                executionLogger.logScore(19.75);      // Already used: double version
+
+
+                // === Print report ===
+                System.out.println("===== Execution Log (via Logger) =====");
+
+                if (executionLogger.isEmpty()) {
+                    System.out.println("Logger is empty. No events recorded.");
+                } else {
+                    System.out.println(" Total log entries: " + executionLogger.size());
+                    for (String log : executionLogger.getResults()) {
+                        System.out.println(log);
+                    }
+                }
+
             } else {
-                // Display validation error dialog to the user
+                executionLogger.logString(" Workflow validation failed. Cannot proceed.");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Validation Error");
                 alert.setHeaderText("Workflow Validation Failed");
@@ -1964,6 +2018,8 @@ public class MainViewController {
             System.out.println("MainController is not set!");
         }
     }
+
+
 
     /**
      * Generic method to execute a node that supports typed contextual execution using parametric polymorphism.
@@ -1992,6 +2048,49 @@ public class MainViewController {
             logger.log(logMap);
         }
     }
+
+    private void createSampleNodesUsingAllFactoryOverloads() {
+        try {
+            // === START node (3-arg: type + id + name) ===
+            WorkflowNode start = NodeFactory.createNode(NodeType.START, "start_demo", "Begin Workflow");
+            mainController.getWorkflowService().addNode(start);
+            addNodeToWorkspace(start);
+
+            // === END node (3-arg) ===
+            WorkflowNode end = NodeFactory.createNode(NodeType.END, "end_demo", "Finish Workflow");
+            mainController.getWorkflowService().addNode(end);
+            addNodeToWorkspace(end);
+
+            // === Auto-generated ID + name (1-arg overload) ===
+            WorkflowNode autoNode = NodeFactory.createNode(NodeType.DATA);
+            mainController.getWorkflowService().addNode(autoNode);
+            addNodeToWorkspace(autoNode);
+
+            // === ID only, default name (2-arg overload) ===
+            WorkflowNode partialNode = NodeFactory.createNode(NodeType.OUTPUT, "output_demo");
+            mainController.getWorkflowService().addNode(partialNode);
+            addNodeToWorkspace(partialNode);
+
+            // === Full overload: type + id + name + extraInfo (4-arg) ===
+            WorkflowNode extraInfoNode = NodeFactory.createNode(
+                    NodeType.PREDICTION,
+                    "pred_demo",
+                    "Run Prediction",
+                    "Using Model-X to predict outcomes"
+            );
+            mainController.getWorkflowService().addNode(extraInfoNode);
+            addNodeToWorkspace(extraInfoNode);
+
+            System.out.println(" All overloaded factory methods used successfully.");
+
+        } catch (InvalidWorkflowException e) {
+            System.err.println(" Validation failed when creating nodes: " + e.getMessage());
+        }
+    }
+
+
+
+
 
 
 
@@ -2077,11 +2176,22 @@ public class MainViewController {
                 // Append log message to terminal output and UI log box (if applicable)
                 if (!(node.getType() == NodeType.START || node.getType() == NodeType.END ||
                         node.getType() == NodeType.DATA  || node.getType() == NodeType.OUTPUT)) {
-                    System.out.println(timestamp + logMessage);
+                    executionLogger.log(logMessage);                          // log(T)
+                    executionLogger.logWithTag(logMessage, node.getId());     // logWithTag(T, String)
+                    executionLogger.logString("Finished: " + logMessage);     // logString(String)
+                    executionLogger.logString("Node executed", true);         // logString(String, boolean)
+                    executionLogger.logScore(logMessage.length());            // logScore(int)
+                    executionLogger.logScore((float) logMessage.length());    // logScore(float)
+                    executionLogger.logScore((double) logMessage.length());   // logScore(double)
+                    executionLogger.logScore(String.valueOf(logMessage.length())); // logScore(String)
+
                     if (executionLogArea != null) {
-                        executionLogArea.appendText(timestamp + logMessage + "\n");
+                        for (String result : executionLogger.getResults()) {
+                            executionLogArea.appendText("🧾 " + result + "\n");
+                        }
                         executionLogArea.setScrollTop(Double.MAX_VALUE);
                     }
+
                 }
 
             } catch (Exception ex) {

@@ -26,7 +26,6 @@ public class ConnectNodesCommand implements WorkflowCommand { // Subtyping Polym
     private final WorkflowNode source;              // Represents the origin node
     private final WorkflowNode target;              // Represents the destination node
     private final MainController mainController;    // Composition: this class depends on a controller to handle logic
-    private final MainViewController controller;    // Composition: another controller to handle view updates
 
     /**
      * Constructor that injects all required dependencies for this command.
@@ -44,7 +43,6 @@ public class ConnectNodesCommand implements WorkflowCommand { // Subtyping Polym
         this.source = source;                 // Encapsulation
         this.target = target;                 // Encapsulation
         this.mainController = mainController; // Composition, Dependency Injection
-        this.controller = controller;         // Composition, Dependency Injection
 
         // This class no longer creates the connection object directly.
         // Instead, it delegates responsibility to the controller.

@@ -1,6 +1,7 @@
 package com.farid.workfloworchestration.model;
 
 import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeException;
+import com.farid.workfloworchestration.util.MetadataPrinter;
 
 import java.util.Map;
 
@@ -27,36 +28,23 @@ import java.util.Map;
 public class EvaluationNode extends ExecutableNode<String> {
 
     // === Private Field (Information Hiding Compliance) ===
-// Mutable instance field for specifying the evaluation metric (e.g., accuracy, F1-score)
     private String evaluationMetric;
 
+    // === Aggregation: Utility for printing metadata ===
+    private final MetadataPrinter<Map<String, String>> metadataPrinter = new MetadataPrinter<>();
 
     // === Constructors (Overloaded - Ad-hoc Polymorphism) ===
 
-    // === Information Hiding Compliance ===
-// This class defines one mutable instance attribute: evaluationMetric.
-// All other fields are inherited from ExecutableNode<String>.
-
-
-    /**
-     * Constructs an EvaluationNode with a default metric ("accuracy").
-     */
     public EvaluationNode(String id, String name) {
-        super(id, name, NodeType.EVALUATION);  // Inheritance + Enum usage
-        this.evaluationMetric = "accuracy";    // Default value
+        super(id, name, NodeType.EVALUATION);
+        this.evaluationMetric = "accuracy";
     }
 
-    /**
-     * Constructs an EvaluationNode with a specific metric.
-     */
     public EvaluationNode(String id, String name, String evaluationMetric) {
         super(id, name, NodeType.EVALUATION);
         this.evaluationMetric = evaluationMetric;
     }
 
-    /**
-     * Constructs an EvaluationNode with a description and metric.
-     */
     public EvaluationNode(String id, String name, String description, String evaluationMetric) {
         super(id, name, description, NodeType.EVALUATION);
         this.evaluationMetric = evaluationMetric;
@@ -74,46 +62,37 @@ public class EvaluationNode extends ExecutableNode<String> {
 
     // === Overridden Execution Methods (Polymorphism) ===
 
-    /**
-     * Executes the evaluation logic without external context.
-     */
     @Override
     public void execute() {
         System.out.println(" Evaluating model using metric: " + evaluationMetric +
                 " in node: " + getName());
     }
 
-    /**
-     * Executes the evaluation logic with a given context.
-     *
-     * @param context Metadata or configuration that influences execution behavior
-     */
     @Override
     public void executeWithContext(Map<String, String> context) {
         System.out.println(" Evaluation with context: " + context +
                 " using metric: " + evaluationMetric);
 
-        //  Log the execution result using generic logger
+        // === Demonstrate all unused overloads of MetadataPrinter ===
+        System.out.println("[Step 1] printMetadata() no-args fallback:");
+        metadataPrinter.printMetadata();
+
+        System.out.println("[Step 2] printMetadata(context, prefix):");
+        metadataPrinter.printMetadata(context, "[EVAL-META]");
+
+        System.out.println("[Step 3] printMetadata(context, prefix, filter):");
+        metadataPrinter.printMetadata(context, "[FILTERED]", "score");
+
+        // === Log execution ===
         executionLogger.log("EvaluationNode executed with metric: " +
                 evaluationMetric + " and context: " + context);
     }
 
-    /**
-     * Validates the node before execution.
-     *
-     * @return true if the evaluation metric is properly set
-     */
     @Override
     public boolean isValid() {
         return evaluationMetric != null && !evaluationMetric.trim().isEmpty();
     }
 
-    /**
-     * Validates whether a certain operation is allowed on this node.
-     *
-     * @param operation The operation to validate
-     * @throws UnsupportedOperationForNodeException Always thrown by default
-     */
     @Override
     public void validateOperation(String operation) throws UnsupportedOperationForNodeException {
         throw new UnsupportedOperationForNodeException(

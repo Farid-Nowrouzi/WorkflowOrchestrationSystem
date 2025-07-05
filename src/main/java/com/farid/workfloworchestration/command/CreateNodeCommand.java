@@ -15,7 +15,7 @@ import com.farid.workfloworchestration.model.WorkflowNode;
  * <p>By separating this logic, we maintain clean modularity, abstraction,
  * and support features like undo/redo.</p>
  *
- * @author Your Name
+ * @author Farid Nowrouzi
  * @version 1.0
  */
 public class CreateNodeCommand implements WorkflowCommand { // Subtyping Polymorphism (via interface)

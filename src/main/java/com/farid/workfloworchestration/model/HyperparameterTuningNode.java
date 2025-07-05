@@ -1,6 +1,8 @@
 package com.farid.workfloworchestration.model;
 
 import com.farid.workfloworchestration.exception.UnsupportedOperationForNodeException;
+import com.farid.workfloworchestration.util.MetadataPrinter;
+
 import java.util.Map;
 
 /**
@@ -19,16 +21,15 @@ import java.util.Map;
  *   </li>
  *   <li><b>Encapsulation:</b> Internal tuning logic and logging are abstracted from external access</li>
  *   <li><b>Abstraction:</b> Defines abstract execution logic using context input</li>
+ *   <li><b>Aggregation:</b> Reuses {@link MetadataPrinter} for metadata formatting without owning it</li>
  * </ul>
  *
  * <p>This node supports integration into ML pipelines requiring dynamic tuning logic.</p>
  */
 public class HyperparameterTuningNode extends ExecutableNode<String> {
 
-    // === Information Hiding Compliance ===
-// This class defines no new attributes.
-// All encapsulated fields are inherited from ExecutableNode<String>.
-
+    // === Aggregation: Utility injected for metadata formatting ===
+    private final MetadataPrinter<Map<String, String>> metadataPrinter = new MetadataPrinter<>();
 
     /**
      * Constructor for basic instantiation without description.
@@ -80,9 +81,20 @@ public class HyperparameterTuningNode extends ExecutableNode<String> {
     public void executeWithContext(Map<String, String> context) {
         System.out.println(" Hyperparameter Tuning node executed with context: " + context);
 
-        //  Log execution
+        // === Demonstrate printMetadata() with all overloads ===
+        System.out.println(" [Step 1] No-arg printMetadata():");
+        metadataPrinter.printMetadata();  // ✔ No metadata provided
+
+        System.out.println(" [Step 2] printMetadata(context, prefix):");
+        metadataPrinter.printMetadata(context, "[TUNING-META]"); //  Already in use
+
+        System.out.println(" [Step 3] printMetadata(context, prefix, keyContains = 'param'):");
+        metadataPrinter.printMetadata(context, "[FILTERED]", "param"); //  Filters keys containing "param"
+
+        // === Log execution ===
         executionLogger.log("Hyperparameter Tuning executed with context: " + context);
     }
+
 
     /**
      * Validates if a specific operation is supported by this node.
